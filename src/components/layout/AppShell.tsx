@@ -8,69 +8,100 @@ import { DB_UPDATED_AT } from "@/lib/pka";
 
 import { PkaLogo } from "@/components/pka/ui";
 
-export const NAV = [
-  { to: "/brokes-maximas", label: "Brokes Maximas", icon: "📊" },
-  { to: "/iniciantes", label: "Iniciantes (1-150)", icon: "🚀" },
-  { to: "/times-hoenn", label: "Times Hoenn", icon: "🌋" },
-  { to: "/estrategia", label: "Estratégia & Up", icon: "🧬" },
-  { to: "/onde-cacar", label: "Onde Caçar?", icon: "🗺️" },
-  { to: "/analisador-loot", label: "Analisador de Loot", icon: "💰" },
-  { to: "/assistente", label: "Assistente", icon: "🤖" },
-  { to: "/pokedex", label: "Pokédex", icon: "🔎" },
-  { to: "/drops", label: "Drops", icon: "🎒" },
-  { to: "/itens", label: "Itens", icon: "💎" },
-  { to: "/localizacoes", label: "Localizações", icon: "📍" },
-  { to: "/tasks", label: "Tasks", icon: "🎯" },
-  { to: "/dungeons", label: "Dungeons", icon: "⚔️" },
-  { to: "/talentos", label: "Talentos", icon: "🧬" },
-  { to: "/medalhas", label: "Medalhas", icon: "🏅" },
-  { to: "/star", label: "Star", icon: "⭐" },
-  { to: "/boost", label: "Boost", icon: "⚡" },
-  { to: "/tier-list", label: "Tier List", icon: "📊" },
-  { to: "/npcs", label: "NPCs e Ginásios", icon: "🥊" },
-  { to: "/sistemas", label: "Sistemas", icon: "🧩" },
-  { to: "/guias", label: "Guias", icon: "📚" },
-  { to: "/favoritos", label: "Favoritos", icon: "💛" },
+export const NAV_GROUPS = [
+  {
+    title: "DESTAQUES",
+    items: [
+      { to: "/iniciantes", label: "Guia 1-150", icon: "🚀" },
+      { to: "/times-hoenn", label: "Times Hoenn", icon: "🌋" },
+      { to: "/onde-cacar", label: "Onde Caçar? (2.0x)", icon: "🗺️" },
+      { to: "/analisador-loot", label: "Analisador de Loot", icon: "💰" },
+      { to: "/assistente", label: "Assistente IA", icon: "🤖" },
+    ],
+  },
+  {
+    title: "SISTEMAS",
+    items: [
+      { to: "/brokes-maximas", label: "Brokes Máximas", icon: "📊" },
+      { to: "/star", label: "Star Ascension", icon: "⭐" },
+      { to: "/boost", label: "Boost Recipes", icon: "⚡" },
+      { to: "/talentos", label: "Talentos", icon: "🧬" },
+      { to: "/medalhas", label: "Medalhas", icon: "🏅" },
+      { to: "/dungeons", label: "Dungeons", icon: "⚔️" },
+      { to: "/tasks", label: "Tasks", icon: "🎯" },
+      { to: "/sistemas", label: "Sistemas Gerais", icon: "🧩" },
+    ],
+  },
+  {
+    title: "BANCO DE DADOS",
+    items: [
+      { to: "/pokedex", label: "Pokédex", icon: "🔎" },
+      { to: "/drops", label: "Drops", icon: "🎒" },
+      { to: "/itens", label: "Itens", icon: "💎" },
+      { to: "/localizacoes", label: "Localizações", icon: "📍" },
+      { to: "/tier-list", label: "Tier List", icon: "📈" },
+      { to: "/npcs", label: "NPCs & Ginásios", icon: "🥊" },
+    ],
+  },
+  {
+    title: "GUIAS & RECURSOS",
+    items: [
+      { to: "/estrategia", label: "Estratégia & Up", icon: "🧬" },
+      { to: "/guias", label: "Guias Gerais", icon: "📚" },
+      { to: "/favoritos", label: "Favoritos", icon: "💛" },
+    ],
+  },
 ] as const;
+
+export const NAV = NAV_GROUPS.flatMap((g) => g.items);
 
 function NavList({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   return (
-    <nav className="flex flex-col gap-1">
-      {NAV.map((item) => {
-        const active = pathname === item.to;
-        return (
-          <Link
-            key={item.to}
-            to={item.to}
-            onClick={onNavigate}
-            className={cn(
-              "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
-              active
-                ? "bg-primary/15 text-primary shadow-[inset_2px_0_0_0_var(--primary)]"
-                : "text-muted-foreground hover:bg-sidebar-accent hover:text-foreground",
-            )}
-          >
-            <span aria-hidden className="text-base">
-              {item.icon}
-            </span>
-            {item.label}
-          </Link>
-        );
-      })}
+    <nav className="flex flex-col gap-4">
+      {NAV_GROUPS.map((group) => (
+        <div key={group.title} className="space-y-1">
+          <p className="px-2.5 text-[10px] font-bold tracking-wider text-muted-foreground/70 uppercase">
+            {group.title}
+          </p>
+          <div className="space-y-0.5">
+            {group.items.map((item) => {
+              const active = pathname === item.to;
+              return (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  onClick={onNavigate}
+                  className={cn(
+                    "flex items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-all",
+                    active
+                      ? "bg-primary/15 text-primary shadow-[inset_2px_0_0_0_var(--primary)] font-semibold"
+                      : "text-muted-foreground/90 hover:bg-sidebar-accent hover:text-foreground",
+                  )}
+                >
+                  <span aria-hidden className="text-sm shrink-0">
+                    {item.icon}
+                  </span>
+                  <span className="truncate">{item.label}</span>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      ))}
     </nav>
   );
 }
 
 function Brand() {
   return (
-    <Link to="/" className="flex items-center gap-3 group">
+    <Link to="/" className="flex items-center gap-3 group px-1">
       <PkaLogo size="md" className="shrink-0" />
       <div className="min-w-0">
         <p className="font-display text-lg font-bold tracking-wide leading-tight group-hover:text-primary transition-colors">
           PKA <span className="text-gradient-gold">Helper</span>
         </p>
-        <p className="text-[11px] text-muted-foreground truncate">Site de Apoio PokeAlliance</p>
+        <p className="text-[10px] text-muted-foreground truncate font-medium">Wiki & Guia Completo</p>
       </div>
     </Link>
   );
@@ -186,16 +217,16 @@ export function AppShell({ children }: { children: ReactNode }) {
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 flex items-center gap-2 border-b border-border bg-background/85 px-3 py-3 backdrop-blur sm:px-6">
+        <header className="sticky top-0 z-30 flex items-center gap-2 border-b border-border/80 bg-background/90 px-3 py-2.5 backdrop-blur-md sm:px-6">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger
-              className="inline-flex size-9 items-center justify-center rounded-md border border-border bg-panel lg:hidden"
+              className="inline-flex size-9 items-center justify-center rounded-lg border border-border bg-panel lg:hidden"
               aria-label="Abrir menu"
             >
               <Menu className="size-4" />
             </SheetTrigger>
             <SheetContent side="left" className="w-72 bg-sidebar p-4 flex flex-col justify-between overflow-y-auto">
-              <SheetTitle className="sr-only">Menu</SheetTitle>
+              <SheetTitle className="sr-only">Menu de Navegação</SheetTitle>
               <div className="space-y-6">
                 <Brand />
                 <NavList onNavigate={() => setOpen(false)} />
@@ -206,23 +237,35 @@ export function AppShell({ children }: { children: ReactNode }) {
             </SheetContent>
           </Sheet>
 
-          <div className="min-w-0 flex-1">
-            <GlobalSearch placeholder="Buscar Pokémon, itens, dungeons, tasks..." />
+          <div className="min-w-0 flex-1 max-w-2xl">
+            <GlobalSearch placeholder="Pesquise por Pokémon, itens, dungeons, tasks... (Ctrl + K)" />
           </div>
 
-          <Link
-            to="/favoritos"
-            aria-label="Meus favoritos"
-            className="inline-flex size-9 items-center justify-center rounded-md border border-border bg-panel text-muted-foreground hover:text-gold"
-          >
-            <Star className="size-4" />
-          </Link>
-          <Link
-            to="/assistente"
-            className="hidden items-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 sm:inline-flex"
-          >
-            🤖 Assistente
-          </Link>
+          <div className="flex items-center gap-1.5 shrink-0 ml-auto">
+            <a
+              href="https://wa.me/5519993149294"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Falar no WhatsApp com Felikzz"
+              className="inline-flex size-9 items-center justify-center rounded-lg border border-border bg-panel text-muted-foreground hover:text-emerald-400 hover:border-emerald-500/40 transition-colors"
+            >
+              <span className="text-base leading-none">💬</span>
+            </a>
+            <Link
+              to="/favoritos"
+              aria-label="Meus favoritos"
+              className="inline-flex size-9 items-center justify-center rounded-lg border border-border bg-panel text-muted-foreground hover:text-gold hover:border-gold/40 transition-colors"
+            >
+              <Star className="size-4" />
+            </Link>
+            <Link
+              to="/assistente"
+              className="hidden items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground hover:bg-primary/90 sm:inline-flex shadow-sm shadow-primary/25 transition-all"
+            >
+              <span>🤖</span>
+              <span>Assistente IA</span>
+            </Link>
+          </div>
         </header>
 
         <main className="mx-auto w-full max-w-6xl flex-1 px-3 py-6 pb-24 sm:px-6 lg:pb-12">{children}</main>

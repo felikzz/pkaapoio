@@ -59,6 +59,20 @@ export function GlobalSearch({
     return () => document.removeEventListener("mousedown", onClick);
   }, []);
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        inputRef.current?.focus();
+        setOpen(true);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   const go = (hit: SearchHit) => {
     pushHistory({ query: hit.label, to: hit.to });
     setOpen(false);
@@ -71,6 +85,7 @@ export function GlobalSearch({
       <div className="relative">
         <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
         <input
+          ref={inputRef}
           value={q}
           onChange={(e) => {
             setQ(e.target.value);
@@ -84,10 +99,13 @@ export function GlobalSearch({
           placeholder={placeholder}
           aria-label="Busca global"
           className={cn(
-            "w-full rounded-lg border border-input bg-panel pl-9 pr-3 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/40",
-            size === "lg" ? "h-14 text-base" : "h-9 text-sm",
+            "w-full rounded-lg border border-input bg-panel pl-9 pr-14 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/40 transition-colors",
+            size === "lg" ? "h-13 text-base" : "h-9 text-sm",
           )}
         />
+        <kbd className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rounded border border-border/80 bg-background/80 px-1.5 py-0.5 text-[10px] font-mono font-medium text-muted-foreground hidden sm:inline-block shadow-sm">
+          Ctrl K
+        </kbd>
       </div>
 
       {open && q.trim().length >= 2 ? (
