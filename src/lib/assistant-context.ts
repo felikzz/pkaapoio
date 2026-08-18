@@ -389,12 +389,13 @@ ${guideMatch.links.length ? `🔗 **Links úteis:**\n${guideMatch.links.map((l) 
   }
 
   // Créditos & Reconhecimento
-  if (/credito|creditos|autor|quem criou|vitormonticelli|vitor monticelli|quem fez|fonte|dados|criador/i.test(q)) {
-    return `### 🌟 Créditos e Reconhecimento das Informações
+  if (/credito|creditos|autor|quem criou|vitormonticelli|vitor monticelli|felikzz|quem fez|fonte|dados|criador/i.test(q)) {
+    return `### 🌟 Créditos e Reconhecimento
     
-Todos os créditos pelo levantamento de dados, drops, mecânicas, tabelas e informações do **PokeAlliance** pertencem a **VitorMonticelli**.
+- **Fonte das informações:** VitorMonticelli
+- **Autor da ferramenta:** Felikzz
 
-O **PKA Helper** reúne e estrutura esses dados para facilitar a consulta diária de toda a comunidade!`;
+O **PKA Helper** reúne e estrutura esses dados para facilitar a consulta diária de toda a comunidade do PokeAlliance!`;
   }
 
   return `Não encontrei informações exatas sobre essa dúvida na base atual do PokeAlliance. Experimente perguntar sobre:

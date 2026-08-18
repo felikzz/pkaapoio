@@ -78,26 +78,25 @@ function Brand() {
 
 function SidebarCredits() {
   return (
-    <div className="rounded-xl border border-primary/25 bg-primary/5 p-3 text-xs shadow-inner backdrop-blur-sm">
+    <div className="rounded-xl border border-primary/25 bg-primary/5 p-3 text-xs shadow-inner backdrop-blur-sm space-y-2">
       <div className="flex items-center gap-1.5 font-semibold text-primary">
         <Sparkles className="size-3.5 text-gold animate-pulse" />
-        <span className="text-[11px] font-display font-bold tracking-wider uppercase">Créditos das Informações</span>
+        <span className="text-[11px] font-display font-bold tracking-wider uppercase">Créditos</span>
       </div>
-      <p className="mt-1 text-[11px] text-muted-foreground leading-snug">
-        Todo o levantamento e dados compilados por:
-      </p>
-      <div className="mt-1.5 flex items-center justify-between rounded-lg border border-gold/40 bg-gold/10 px-2.5 py-1.5 shadow-sm">
-        <div className="flex items-center gap-1.5">
-          <span className="inline-block size-2 rounded-full bg-gold shadow-[0_0_8px_rgba(255,215,0,0.8)]" />
-          <span className="font-bold text-xs text-gradient-gold">
-            VitorMonticelli
-          </span>
+
+      <div className="space-y-1.5">
+        <div className="rounded-lg border border-border/70 bg-panel/70 px-2.5 py-1.5">
+          <span className="text-muted-foreground block text-[10px]">Fonte das informações:</span>
+          <span className="font-bold text-xs text-gradient-gold">VitorMonticelli</span>
         </div>
-        <span className="rounded bg-gold/20 px-1.5 py-0.5 text-[9px] font-bold text-gold uppercase tracking-wider">
-          Autor
-        </span>
+
+        <div className="rounded-lg border border-border/70 bg-panel/70 px-2.5 py-1.5">
+          <span className="text-muted-foreground block text-[10px]">Autor da ferramenta:</span>
+          <span className="font-bold text-xs text-primary">Felikzz</span>
+        </div>
       </div>
-      <div className="mt-2 border-t border-border/40 pt-1.5 flex items-center justify-between text-[10px] text-muted-foreground">
+
+      <div className="border-t border-border/40 pt-1.5 flex items-center justify-between text-[10px] text-muted-foreground">
         <span>Base atualizada:</span>
         <span className="font-mono font-medium text-foreground/80">{DB_UPDATED_AT}</span>
       </div>
@@ -121,18 +120,23 @@ function AppFooter() {
         </div>
 
         {/* Caixa de Créditos em Destaque */}
-        <div className="flex flex-col sm:flex-row items-center gap-3 rounded-xl border border-primary/25 bg-panel/80 px-4 py-3 shadow-md">
-          <div className="flex items-center gap-1.5 text-primary font-semibold text-xs">
-            <span className="text-base">🏆</span>
-            <span className="font-display tracking-wide uppercase text-[11px] font-bold">Créditos Totais:</span>
+        <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 rounded-xl border border-primary/25 bg-panel/80 px-5 py-2.5 shadow-md">
+          <div className="flex items-center gap-2 text-left">
+            <span className="text-sm">📖</span>
+            <div>
+              <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Fonte das informações</p>
+              <p className="text-xs font-bold text-gradient-gold">VitorMonticelli</p>
+            </div>
           </div>
-          <div className="text-center sm:text-left">
-            <p className="text-xs text-muted-foreground">
-              Todas as informações, drops e mecânicas disponibilizadas por{" "}
-              <strong className="font-bold text-gradient-gold text-sm inline-block">
-                VitorMonticelli
-              </strong>
-            </p>
+
+          <div className="hidden sm:block h-7 w-px bg-border" />
+
+          <div className="flex items-center gap-2 text-left">
+            <span className="text-sm">💻</span>
+            <div>
+              <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Autor da ferramenta</p>
+              <p className="text-xs font-bold text-primary">Felikzz</p>
+            </div>
           </div>
         </div>
 
