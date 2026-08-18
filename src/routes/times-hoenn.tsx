@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
 import { SectionTitle, Panel, Chip, TierBadge, PokemonIcon } from "@/components/pka/ui";
 import { slugify } from "@/lib/pka";
-import { Sparkles, Users, Shield, Zap, ThumbsUp, ThumbsDown, Info, ArrowUpRight, Flame, Droplets, Leaf, Skull, Moon, Compass } from "lucide-react";
+import { Sparkles, Users, Shield, Zap, ThumbsUp, ThumbsDown, Info, ArrowUpRight, Flame, Droplets, Leaf, Skull, Moon, Compass, AlertTriangle } from "lucide-react";
 
 export const Route = createFileRoute("/times-hoenn")({
   head: () => ({
@@ -287,18 +287,17 @@ const HOENN_TEAMS: ElementTeam[] = [
     icon: "🛡️",
     badgeColor: "from-slate-500/30 to-zinc-600/30 border-slate-400/40 text-slate-200",
     initialTeam: [
-      { name: "Shiny Forretress", tier: "T2", isOfftank: true, stars: 2 },
       { name: "Shiny Metang", tier: "T1", isOfftank: true },
-      { name: "Lucario", tier: "T2", isOfftank: true, stars: 2 },
-      { name: "Shiny Magneton", tier: "T2", stars: 2 },
-      { name: "Magneton", tier: "T3", stars: 3 },
-      { name: "Shiny Skarmory", tier: "SR" },
+      { name: "Shiny Mawile", tier: "T1" },
+      { name: "Shiny Smeargle Steel", tier: "T1", note: "Cooldown de SR" },
     ],
     upgrades: [
-      { name: "Shiny Mawile", tier: "T1" },
-      { name: "Shiny Aggron", tier: "SR" },
+      { name: "Shiny Skarmory", tier: "SR" },
+      { name: "Shiny Aggron", tier: "SR", isOfftank: true },
+      { name: "Shiny Metagross", tier: "UR" },
+      { name: "Shiny Scizor", tier: "LD" },
     ],
-    pros: "Pokémon com cooldowns rápidos e alta durabilidade.",
+    pros: "Pokémon com cooldowns rápidos, altíssima durabilidade e grande potencial de escalonamento até LD.",
     cons: "Exige Pokémon específicos de Hoenn que você mesmo terá que projetar; recomendado mesclar com outros elementos.",
   },
   {
@@ -350,6 +349,19 @@ function HoennTeamsPage() {
           title="Guia de Times Iniciais para Hoenn"
           subtitle="Sugestões de composições e rotações por elemento para começar a desbravar a região de Hoenn no PKA."
         />
+      </div>
+
+      {/* DISCLAIMER IMPORTANTE */}
+      <div className="rounded-xl border border-amber-500/50 bg-amber-500/10 p-4 sm:p-5 shadow-sm space-y-2">
+        <div className="flex items-center gap-2.5 text-amber-400">
+          <AlertTriangle className="size-5 shrink-0" />
+          <h2 className="text-sm sm:text-base font-bold text-amber-300">
+            ⚠️ Disclaimer Importante: Pesquise Antes de Investir Alto!
+          </h2>
+        </div>
+        <p className="text-xs sm:text-sm text-foreground/90 leading-relaxed pl-7">
+          Antes de gastar grandes quantias de <strong>KKs, Diamonds (DD), Star Ascension ou Boost Stones</strong> em qualquer time ou elemento, <strong>pesquise a fundo</strong>: analise a disponibilidade e disputa das hunts no seu servidor, confira os preços do market e tire dúvidas com jogadores mais experientes. As composições aqui listadas são <strong>sugestões e referências da comunidade</strong> e o meta pode variar de acordo com o seu estilo de jogo e objetivos.
+        </p>
       </div>
 
       {/* CRÉDITOS E NOTAS IMPORTANTES */}

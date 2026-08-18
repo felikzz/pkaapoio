@@ -8,7 +8,9 @@ import { DB_UPDATED_AT } from "@/lib/pka";
 
 import { PkaLogo } from "@/components/pka/ui";
 
+
 export const NAV = [
+  { to: "/brokes-maximas", label: "Brokes Maximas", icon: "📊" },
   { to: "/iniciantes", label: "Iniciantes (1-150)", icon: "🚀" },
   { to: "/times-hoenn", label: "Times Hoenn", icon: "🌋" },
   { to: "/estrategia", label: "Estratégia & Up", icon: "🧬" },
@@ -31,6 +33,8 @@ export const NAV = [
   { to: "/guias", label: "Guias", icon: "📚" },
   { to: "/favoritos", label: "Favoritos", icon: "💛" },
 ] as const;
+
+
 
 function NavList({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -84,17 +88,6 @@ export function AppShell({ children }: { children: ReactNode }) {
         <Brand />
         <div className="flex-1 overflow-y-auto">
           <NavList />
-          <div className="mt-4">
-            <h2 className="text-sm font-medium text-muted-foreground">Brokes máximos</h2>
-            <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
-              {BROKES_MAX.map((b) => (
-                <li key={b.tier} className="flex justify-between">
-                  <span>{b.tier}</span>
-                  <span>{b.max}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
         <p className="text-[11px] text-muted-foreground">Base atualizada em: {DB_UPDATED_AT}</p>
       </aside>

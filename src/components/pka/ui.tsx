@@ -132,16 +132,34 @@ export function Panel({ children, className }: { children: ReactNode; className?
 }
 
 export function TierBadge({ tier }: { tier: string }) {
-  const special = /mythic|legendary|ultra|super/i.test(tier);
+  const isMythicOrLD = /^(mythic|ld|legendary)$/i.test(tier.trim());
+  const isUR = /^(ur|ultra\s*rare)$/i.test(tier.trim());
+  const isSR = /^(sr|super\s*rare)$/i.test(tier.trim());
+  
+  if (isMythicOrLD) {
+    return (
+      <span className="rounded-md border border-purple-500/40 bg-purple-500/15 px-2 py-0.5 text-xs font-bold text-purple-300 shadow-sm">
+        {tier}
+      </span>
+    );
+  }
+  if (isUR) {
+    return (
+      <span className="rounded-md border border-red-500/40 bg-red-500/15 px-2 py-0.5 text-xs font-bold text-red-400 shadow-sm">
+        {tier}
+      </span>
+    );
+  }
+  if (isSR) {
+    return (
+      <span className="rounded-md border border-gold/40 bg-gold/15 px-2 py-0.5 text-xs font-bold text-gold shadow-sm">
+        {tier}
+      </span>
+    );
+  }
+
   return (
-    <span
-      className={cn(
-        "rounded-md border px-2 py-0.5 text-xs font-semibold",
-        special
-          ? "border-gold/40 bg-gold/10 text-gold"
-          : "border-primary/40 bg-primary/10 text-primary",
-      )}
-    >
+    <span className="rounded-md border border-primary/40 bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary">
       {tier}
     </span>
   );
