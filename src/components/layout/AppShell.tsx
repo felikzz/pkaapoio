@@ -87,7 +87,7 @@ function SidebarCredits() {
       <div className="space-y-1.5">
         <div className="rounded-lg border border-border/70 bg-panel/70 px-2.5 py-1.5">
           <span className="text-muted-foreground block text-[10px]">Fonte das informações:</span>
-          <span className="font-bold text-xs text-gradient-gold">VitorMonticelli</span>
+          <span className="font-bold text-xs text-gradient-gold">VitorMonticelli <span className="text-muted-foreground font-normal">&</span> WikiPKA</span>
         </div>
 
         <div className="rounded-lg border border-border/70 bg-panel/70 px-2.5 py-1.5">
@@ -125,7 +125,9 @@ function AppFooter() {
             <span className="text-sm">📖</span>
             <div>
               <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Fonte das informações</p>
-              <p className="text-xs font-bold text-gradient-gold">VitorMonticelli</p>
+              <p className="text-xs font-bold text-gradient-gold">
+                VitorMonticelli <span className="text-foreground/70 font-normal">e</span> WikiPKA
+              </p>
             </div>
           </div>
 
