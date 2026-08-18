@@ -142,10 +142,15 @@ const dropsByPokemon = new Map<string, DropRow>();
 db.drops.forEach((d) => dropsByPokemon.set(norm(d.pokemon), d));
 
 const dropsByItem = new Map<string, string[]>();
+const itemDisplayMap = new Map<string, string>();
+
 db.drops.forEach((d) =>
   d.items.forEach((i) => {
     const k = norm(i);
-    if (!dropsByItem.has(k)) dropsByItem.set(k, []);
+    if (!dropsByItem.has(k)) {
+      dropsByItem.set(k, []);
+      itemDisplayMap.set(k, i);
+    }
     dropsByItem.get(k)!.push(d.pokemon);
   }),
 );
@@ -195,8 +200,14 @@ export const pokemonList: PokemonEntry[] = [...pokemonMap.values()].sort((a, b) 
 );
 const pokemonBySlug = new Map(pokemonList.map((p) => [p.slug, p]));
 
-export const itemList: string[] = [...dropsByItem.keys()].sort();
-const itemBySlug = new Map(itemList.map((i) => [slugify(i), i]));
+export const itemList: string[] = [...itemDisplayMap.values()].sort((a, b) =>
+  a.localeCompare(b),
+);
+const itemBySlug = new Map<string, string>();
+itemList.forEach((item) => {
+  itemBySlug.set(slugify(item), item);
+  itemBySlug.set(norm(item), item);
+});
 
 export const dungeonBySlug = new Map(db.dungeons.map((d) => [slugify(d.name), d]));
 
@@ -213,7 +224,7 @@ export function getPokemonBySlug(slug: string): PokemonEntry | null {
 }
 
 export function getItemBySlug(slug: string): string | null {
-  return itemBySlug.get(slug) ?? null;
+  return itemBySlug.get(slugify(slug)) ?? itemBySlug.get(norm(slug)) ?? null;
 }
 
 export type PokemonProfile = {
