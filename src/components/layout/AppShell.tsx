@@ -84,6 +84,17 @@ export function AppShell({ children }: { children: ReactNode }) {
         <Brand />
         <div className="flex-1 overflow-y-auto">
           <NavList />
+          <div className="mt-4">
+            <h2 className="text-sm font-medium text-muted-foreground">Brokes máximos</h2>
+            <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
+              {BROKES_MAX.map((b) => (
+                <li key={b.tier} className="flex justify-between">
+                  <span>{b.tier}</span>
+                  <span>{b.max}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
         <p className="text-[11px] text-muted-foreground">Base atualizada em: {DB_UPDATED_AT}</p>
       </aside>
