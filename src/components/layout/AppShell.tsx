@@ -92,7 +92,15 @@ function SidebarCredits() {
 
         <div className="rounded-lg border border-border/70 bg-panel/70 px-2.5 py-1.5">
           <span className="text-muted-foreground block text-[10px]">Autor da ferramenta:</span>
-          <span className="font-bold text-xs text-primary">Felikzz</span>
+          <a
+            href="https://wa.me/5519993149294"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Conversar com Felikzz no WhatsApp"
+            className="font-bold text-xs text-primary hover:underline hover:text-primary/80 transition-colors inline-flex items-center gap-1"
+          >
+            Felikzz
+          </a>
         </div>
       </div>
 
@@ -137,7 +145,15 @@ function AppFooter() {
             <span className="text-sm">💻</span>
             <div>
               <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Autor da ferramenta</p>
-              <p className="text-xs font-bold text-primary">Felikzz</p>
+              <a
+                href="https://wa.me/5519993149294"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Conversar com Felikzz no WhatsApp"
+                className="text-xs font-bold text-primary hover:underline hover:text-primary/80 transition-colors inline-block"
+              >
+                Felikzz
+              </a>
             </div>
           </div>
         </div>
