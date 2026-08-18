@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, Search, Star } from "lucide-react";
+import { Menu, Search, Star, Sparkles } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -7,7 +7,6 @@ import { GlobalSearch } from "@/components/pka/GlobalSearch";
 import { DB_UPDATED_AT } from "@/lib/pka";
 
 import { PkaLogo } from "@/components/pka/ui";
-
 
 export const NAV = [
   { to: "/brokes-maximas", label: "Brokes Maximas", icon: "📊" },
@@ -33,8 +32,6 @@ export const NAV = [
   { to: "/guias", label: "Guias", icon: "📚" },
   { to: "/favoritos", label: "Favoritos", icon: "💛" },
 ] as const;
-
-
 
 function NavList({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
@@ -79,17 +76,91 @@ function Brand() {
   );
 }
 
+function SidebarCredits() {
+  return (
+    <div className="rounded-xl border border-primary/25 bg-primary/5 p-3 text-xs shadow-inner backdrop-blur-sm">
+      <div className="flex items-center gap-1.5 font-semibold text-primary">
+        <Sparkles className="size-3.5 text-gold animate-pulse" />
+        <span className="text-[11px] font-display font-bold tracking-wider uppercase">Créditos das Informações</span>
+      </div>
+      <p className="mt-1 text-[11px] text-muted-foreground leading-snug">
+        Todo o levantamento e dados compilados por:
+      </p>
+      <div className="mt-1.5 flex items-center justify-between rounded-lg border border-gold/40 bg-gold/10 px-2.5 py-1.5 shadow-sm">
+        <div className="flex items-center gap-1.5">
+          <span className="inline-block size-2 rounded-full bg-gold shadow-[0_0_8px_rgba(255,215,0,0.8)]" />
+          <span className="font-bold text-xs text-gradient-gold">
+            VitorMonticelli
+          </span>
+        </div>
+        <span className="rounded bg-gold/20 px-1.5 py-0.5 text-[9px] font-bold text-gold uppercase tracking-wider">
+          Autor
+        </span>
+      </div>
+      <div className="mt-2 border-t border-border/40 pt-1.5 flex items-center justify-between text-[10px] text-muted-foreground">
+        <span>Base atualizada:</span>
+        <span className="font-mono font-medium text-foreground/80">{DB_UPDATED_AT}</span>
+      </div>
+    </div>
+  );
+}
+
+function AppFooter() {
+  return (
+    <footer className="border-t border-border/60 bg-sidebar/60 py-8 px-4 sm:px-8 text-muted-foreground">
+      <div className="mx-auto max-w-6xl flex flex-col items-center justify-between gap-6 md:flex-row md:text-left">
+        {/* Identidade */}
+        <div className="flex items-center gap-3">
+          <PkaLogo size="sm" className="shrink-0" />
+          <div>
+            <p className="font-display text-base font-bold text-foreground">
+              PKA <span className="text-gradient-gold">Helper</span>
+            </p>
+            <p className="text-xs text-muted-foreground">Site de Apoio da Comunidade PokeAlliance</p>
+          </div>
+        </div>
+
+        {/* Caixa de Créditos em Destaque */}
+        <div className="flex flex-col sm:flex-row items-center gap-3 rounded-xl border border-primary/25 bg-panel/80 px-4 py-3 shadow-md">
+          <div className="flex items-center gap-1.5 text-primary font-semibold text-xs">
+            <span className="text-base">🏆</span>
+            <span className="font-display tracking-wide uppercase text-[11px] font-bold">Créditos Totais:</span>
+          </div>
+          <div className="text-center sm:text-left">
+            <p className="text-xs text-muted-foreground">
+              Todas as informações, drops e mecânicas disponibilizadas por{" "}
+              <strong className="font-bold text-gradient-gold text-sm inline-block">
+                VitorMonticelli
+              </strong>
+            </p>
+          </div>
+        </div>
+
+        {/* Info da Base */}
+        <div className="text-center md:text-right text-[11px] text-muted-foreground">
+          <p>
+            Base de dados: <span className="font-mono text-foreground/80">{DB_UPDATED_AT}</span>
+          </p>
+          <p className="mt-0.5 text-[10px] text-muted-foreground/70">
+            Dedicado à comunidade do PokeAlliance
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
 export function AppShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
 
   return (
     <div className="min-h-screen lg:flex">
-      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col gap-6 border-r border-sidebar-border bg-sidebar p-4 lg:flex">
+      <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col gap-4 border-r border-sidebar-border bg-sidebar p-4 lg:flex">
         <Brand />
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto pr-1">
           <NavList />
         </div>
-        <p className="text-[11px] text-muted-foreground">Base atualizada em: {DB_UPDATED_AT}</p>
+        <SidebarCredits />
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
@@ -101,12 +172,15 @@ export function AppShell({ children }: { children: ReactNode }) {
             >
               <Menu className="size-4" />
             </SheetTrigger>
-            <SheetContent side="left" className="w-72 bg-sidebar p-4">
+            <SheetContent side="left" className="w-72 bg-sidebar p-4 flex flex-col justify-between overflow-y-auto">
               <SheetTitle className="sr-only">Menu</SheetTitle>
-              <div className="mb-6">
+              <div className="space-y-6">
                 <Brand />
+                <NavList onNavigate={() => setOpen(false)} />
               </div>
-              <NavList onNavigate={() => setOpen(false)} />
+              <div className="pt-4 mt-4 border-t border-border/40">
+                <SidebarCredits />
+              </div>
             </SheetContent>
           </Sheet>
 
@@ -129,7 +203,9 @@ export function AppShell({ children }: { children: ReactNode }) {
           </Link>
         </header>
 
-        <main className="mx-auto w-full max-w-6xl flex-1 px-3 py-6 pb-24 sm:px-6 lg:pb-10">{children}</main>
+        <main className="mx-auto w-full max-w-6xl flex-1 px-3 py-6 pb-24 sm:px-6 lg:pb-12">{children}</main>
+
+        <AppFooter />
 
         <nav className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-border bg-sidebar/95 backdrop-blur lg:hidden">
           {[
