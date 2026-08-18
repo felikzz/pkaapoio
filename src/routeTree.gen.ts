@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AnalisadorLootRouteImport } from './routes/analisador-loot'
 import { Route as AssistenteRouteImport } from './routes/assistente'
 import { Route as BoostRouteImport } from './routes/boost'
+import { Route as BrokesMaximasRouteImport } from './routes/brokes-maximas'
 import { Route as DropsRouteImport } from './routes/drops'
 import { Route as DungeonsRouteImport } from './routes/dungeons'
 import { Route as EstrategiaRouteImport } from './routes/estrategia'
@@ -53,6 +54,11 @@ const AssistenteRoute = AssistenteRouteImport.update({
 const BoostRoute = BoostRouteImport.update({
   id: '/boost',
   path: '/boost',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrokesMaximasRoute = BrokesMaximasRouteImport.update({
+  id: '/brokes-maximas',
+  path: '/brokes-maximas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DropsRoute = DropsRouteImport.update({
@@ -166,6 +172,7 @@ export interface FileRoutesByFullPath {
   '/analisador-loot': typeof AnalisadorLootRoute
   '/assistente': typeof AssistenteRoute
   '/boost': typeof BoostRoute
+  '/brokes-maximas': typeof BrokesMaximasRoute
   '/drops': typeof DropsRoute
   '/dungeons': typeof DungeonsRoute
   '/estrategia': typeof EstrategiaRoute
@@ -193,6 +200,7 @@ export interface FileRoutesByTo {
   '/analisador-loot': typeof AnalisadorLootRoute
   '/assistente': typeof AssistenteRoute
   '/boost': typeof BoostRoute
+  '/brokes-maximas': typeof BrokesMaximasRoute
   '/drops': typeof DropsRoute
   '/dungeons': typeof DungeonsRoute
   '/estrategia': typeof EstrategiaRoute
@@ -221,6 +229,7 @@ export interface FileRoutesById {
   '/analisador-loot': typeof AnalisadorLootRoute
   '/assistente': typeof AssistenteRoute
   '/boost': typeof BoostRoute
+  '/brokes-maximas': typeof BrokesMaximasRoute
   '/drops': typeof DropsRoute
   '/dungeons': typeof DungeonsRoute
   '/estrategia': typeof EstrategiaRoute
@@ -250,6 +259,7 @@ export interface FileRouteTypes {
     | '/analisador-loot'
     | '/assistente'
     | '/boost'
+    | '/brokes-maximas'
     | '/drops'
     | '/dungeons'
     | '/estrategia'
@@ -277,6 +287,7 @@ export interface FileRouteTypes {
     | '/analisador-loot'
     | '/assistente'
     | '/boost'
+    | '/brokes-maximas'
     | '/drops'
     | '/dungeons'
     | '/estrategia'
@@ -304,6 +315,7 @@ export interface FileRouteTypes {
     | '/analisador-loot'
     | '/assistente'
     | '/boost'
+    | '/brokes-maximas'
     | '/drops'
     | '/dungeons'
     | '/estrategia'
@@ -332,6 +344,7 @@ export interface RootRouteChildren {
   AnalisadorLootRoute: typeof AnalisadorLootRoute
   AssistenteRoute: typeof AssistenteRoute
   BoostRoute: typeof BoostRoute
+  BrokesMaximasRoute: typeof BrokesMaximasRoute
   DropsRoute: typeof DropsRoute
   DungeonsRoute: typeof DungeonsRoute
   EstrategiaRoute: typeof EstrategiaRoute
@@ -383,6 +396,13 @@ declare module '@tanstack/react-router' {
       path: '/boost'
       fullPath: '/boost'
       preLoaderRoute: typeof BoostRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/brokes-maximas': {
+      id: '/brokes-maximas'
+      path: '/brokes-maximas'
+      fullPath: '/brokes-maximas'
+      preLoaderRoute: typeof BrokesMaximasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/drops': {
@@ -540,6 +560,7 @@ const rootRouteChildren: RootRouteChildren = {
   AnalisadorLootRoute: AnalisadorLootRoute,
   AssistenteRoute: AssistenteRoute,
   BoostRoute: BoostRoute,
+  BrokesMaximasRoute: BrokesMaximasRoute,
   DropsRoute: DropsRoute,
   DungeonsRoute: DungeonsRoute,
   EstrategiaRoute: EstrategiaRoute,
@@ -565,10 +586,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-declare module '@tanstack/react-router' {
-  interface Register {
-    router: ReturnType<typeof getRouter>
-  }
-}

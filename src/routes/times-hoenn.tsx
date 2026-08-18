@@ -88,7 +88,6 @@ const HOENN_TEAMS: ElementTeam[] = [
     icon: "✨",
     badgeColor: "from-pink-500/30 to-rose-600/30 border-pink-500/40 text-pink-300",
     initialTeam: [
-      { name: "Mega Clefable", tier: "T1", isOfftank: true },
       { name: "Shiny Granbull", tier: "T2", isOfftank: true, stars: 2 },
       { name: "Mimikyu", tier: "T2", isOfftank: true, stars: 2 },
       { name: "Sylveon", tier: "T2", isOfftank: true, stars: 2 },
