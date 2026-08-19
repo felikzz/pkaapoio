@@ -20,6 +20,35 @@ export type PokeType =
   | "Steel"
   | "Fairy";
 
+export type PokemonTypeInfo = {
+  id: PokeType;
+  label: string;
+  icon: string;
+  color: string;
+  badgeClass: string;
+};
+
+export const POKEMON_TYPES_INFO: PokemonTypeInfo[] = [
+  { id: "Fire", label: "Fogo", icon: "🔥", color: "from-amber-500/20 to-orange-500/10 border-orange-500/30 text-amber-400", badgeClass: "border-orange-500/30 bg-orange-500/10 text-orange-400" },
+  { id: "Water", label: "Água", icon: "💧", color: "from-blue-500/20 to-cyan-500/10 border-blue-500/30 text-blue-400", badgeClass: "border-blue-500/30 bg-blue-500/10 text-blue-400" },
+  { id: "Grass", label: "Planta", icon: "🌿", color: "from-emerald-500/20 to-green-500/10 border-emerald-500/30 text-emerald-400", badgeClass: "border-emerald-500/30 bg-emerald-500/10 text-emerald-400" },
+  { id: "Electric", label: "Elétrico", icon: "⚡", color: "from-yellow-500/20 to-amber-500/10 border-yellow-500/30 text-yellow-400", badgeClass: "border-yellow-500/30 bg-yellow-500/10 text-yellow-400" },
+  { id: "Fighting", label: "Lutador", icon: "🥊", color: "from-red-500/20 to-rose-500/10 border-red-500/30 text-red-400", badgeClass: "border-red-500/30 bg-red-500/10 text-red-400" },
+  { id: "Psychic", label: "Psíquico", icon: "🔮", color: "from-purple-500/20 to-pink-500/10 border-purple-500/30 text-purple-400", badgeClass: "border-purple-500/30 bg-purple-500/10 text-purple-400" },
+  { id: "Ghost", label: "Fantasma", icon: "👻", color: "from-indigo-500/20 to-violet-500/10 border-indigo-500/30 text-indigo-400", badgeClass: "border-indigo-500/30 bg-indigo-500/10 text-indigo-400" },
+  { id: "Dark", label: "Sombrio", icon: "🌑", color: "from-zinc-500/20 to-slate-500/10 border-zinc-500/30 text-zinc-400", badgeClass: "border-zinc-500/30 bg-zinc-500/10 text-zinc-400" },
+  { id: "Dragon", label: "Dragão", icon: "🐉", color: "from-teal-500/20 to-cyan-500/10 border-teal-500/30 text-teal-400", badgeClass: "border-teal-500/30 bg-teal-500/10 text-teal-400" },
+  { id: "Normal", label: "Normal", icon: "⭐", color: "from-stone-500/20 to-neutral-500/10 border-stone-500/30 text-stone-300", badgeClass: "border-stone-500/30 bg-stone-500/10 text-stone-300" },
+  { id: "Ground", label: "Terra", icon: "🏜️", color: "from-amber-600/20 to-yellow-600/10 border-amber-600/30 text-amber-500", badgeClass: "border-amber-600/30 bg-amber-600/10 text-amber-500" },
+  { id: "Rock", label: "Pedra", icon: "🪨", color: "from-stone-600/20 to-zinc-600/10 border-stone-600/30 text-stone-400", badgeClass: "border-stone-600/30 bg-stone-600/10 text-stone-400" },
+  { id: "Ice", label: "Gelo", icon: "❄️", color: "from-sky-500/20 to-blue-500/10 border-sky-500/30 text-sky-400", badgeClass: "border-sky-500/30 bg-sky-500/10 text-sky-400" },
+  { id: "Poison", label: "Veneno", icon: "🧪", color: "from-fuchsia-500/20 to-purple-500/10 border-fuchsia-500/30 text-fuchsia-400", badgeClass: "border-fuchsia-500/30 bg-fuchsia-500/10 text-fuchsia-400" },
+  { id: "Flying", label: "Voador", icon: "🦅", color: "from-cyan-500/20 to-sky-500/10 border-cyan-500/30 text-cyan-400", badgeClass: "border-cyan-500/30 bg-cyan-500/10 text-cyan-400" },
+  { id: "Bug", label: "Inseto", icon: "🐛", color: "from-lime-500/20 to-green-500/10 border-lime-500/30 text-lime-400", badgeClass: "border-lime-500/30 bg-lime-500/10 text-lime-400" },
+  { id: "Steel", label: "Aço", icon: "🛡️", color: "from-slate-400/20 to-zinc-400/10 border-slate-400/30 text-slate-300", badgeClass: "border-slate-400/30 bg-slate-400/10 text-slate-300" },
+  { id: "Fairy", label: "Fada", icon: "✨", color: "from-pink-400/20 to-rose-400/10 border-pink-400/30 text-pink-400", badgeClass: "border-pink-400/30 bg-pink-400/10 text-pink-400" },
+];
+
 export const TYPE_ADVANTAGES: Record<string, string[]> = {
   Fire: ["Grass", "Ice", "Bug", "Steel"],
   Water: ["Fire", "Ground", "Rock"],

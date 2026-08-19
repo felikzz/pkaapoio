@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useFavorites, type Favorite } from "@/lib/storage";
 import { slugify, type PokemonEntry } from "@/lib/pka";
+import { POKEMON_TYPES_INFO } from "@/lib/matchup";
 
 export function PkaLogo({
   className,
@@ -219,6 +220,51 @@ export function FavoriteButton({ fav }: { fav: Favorite }) {
   );
 }
 
+export function TypeBadge({
+  type,
+  size = "sm",
+  className,
+}: {
+  type: string;
+  size?: "xs" | "sm" | "md";
+  className?: string;
+}) {
+  const info = POKEMON_TYPES_INFO.find((t) => t.id.toLowerCase() === type.toLowerCase());
+  const sizeClasses = {
+    xs: "px-1.5 py-0.5 text-[10px]",
+    sm: "px-2 py-0.5 text-xs",
+    md: "px-2.5 py-1 text-xs font-semibold",
+  }[size];
+
+  if (!info) {
+    return (
+      <span
+        className={cn(
+          "inline-flex items-center gap-1 rounded-md border border-border bg-panel-strong text-muted-foreground",
+          sizeClasses,
+          className,
+        )}
+      >
+        <span>{type}</span>
+      </span>
+    );
+  }
+
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center gap-1 rounded-md border font-medium shadow-2xs",
+        info.badgeClass,
+        sizeClasses,
+        className,
+      )}
+    >
+      <span aria-hidden>{info.icon}</span>
+      <span>{info.label}</span>
+    </span>
+  );
+}
+
 export function PokemonCard({ p }: { p: PokemonEntry }) {
   return (
     <Link
@@ -230,7 +276,13 @@ export function PokemonCard({ p }: { p: PokemonEntry }) {
         <PokemonIcon pokemon={p.name} className="shrink-0" />
         <div className="min-w-0">
           <p className="truncate font-display text-base font-semibold group-hover:text-primary">{p.name}</p>
-          <p className="truncate text-xs text-muted-foreground">{p.type ?? "Tipo não informado"}</p>
+          <div className="mt-0.5 flex items-center gap-1.5">
+            {p.type && p.type !== "?" ? (
+              <TypeBadge type={p.type} size="xs" />
+            ) : (
+              <span className="text-[11px] text-muted-foreground">Tipo não informado</span>
+            )}
+          </div>
         </div>
       </div>
       {p.tier ? <TierBadge tier={p.tier} /> : null}
