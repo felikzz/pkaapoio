@@ -35,8 +35,34 @@ function BeginnersGuide() {
           subtitle="Tudo o que você precisa saber desde Pallet Town até o level 150 no PokeAlliance"
         />
 
+        {/* BANNER NEW SERVER TITAN */}
+        <div className="mt-3 rounded-xl border border-amber-500/40 bg-gradient-to-r from-amber-500/15 via-panel to-primary/10 p-3.5 sm:p-4 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <span className="text-2xl shrink-0">🔥</span>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-extrabold text-amber-400 bg-amber-500/20 px-2 py-0.5 rounded border border-amber-500/30 uppercase">
+                  Novo Servidor Titan
+                </span>
+                <p className="text-xs font-bold text-foreground">Vai começar no servidor Titan hoje?</p>
+              </div>
+              <p className="text-[11px] text-muted-foreground mt-0.5">
+                Veja o <strong>Guia Passo a Passo da 1ª à 6ª Hunt</strong> com rotas alternativas para fugir dos respawns lotados!
+              </p>
+            </div>
+          </div>
+
+          <Link
+            to="/rota-titan"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-amber-500 px-3.5 py-1.5 text-xs font-bold text-black hover:bg-amber-400 transition-all shrink-0 shadow-sm"
+          >
+            <span>Ver Rota do Titan</span>
+            <span className="text-xs">➔</span>
+          </Link>
+        </div>
+
         {/* Quick Tabs */}
-        <div className="flex flex-wrap gap-2 pt-2">
+        <div className="flex flex-wrap gap-2 pt-4">
           <button
             onClick={() => setActiveTab("all")}
             className={`rounded-lg px-3.5 py-1.5 text-xs font-medium transition-all ${

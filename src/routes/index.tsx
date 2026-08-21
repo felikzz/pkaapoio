@@ -26,6 +26,13 @@ export const Route = createFileRoute("/")({
 
 const HIGHLIGHTS = [
   {
+    icon: "🔥",
+    title: "Rota Server Titan",
+    desc: "Guia do zero & anti-lotação",
+    to: "/rota-titan",
+    tag: "Novo Servidor",
+  },
+  {
     icon: "🚀",
     title: "Guia 1-150",
     desc: "Rotas de up e tasks rápidas",
@@ -87,8 +94,9 @@ const CATEGORIES = [
   {
     title: "Guias & Estratégias",
     icon: "🗺️",
-    count: 4,
+    count: 5,
     items: [
+      { to: "/rota-titan", label: "🔥 Rota Server Titan (1-150)", icon: "⚔️" },
       { to: "/iniciantes", label: "Guia 1 ao 150", icon: "🚀" },
       { to: "/times-hoenn", label: "Times de Hoenn", icon: "🌋" },
       { to: "/onde-cacar", label: "Onde Caçar? (2.0x)", icon: "🗺️" },
@@ -153,32 +161,60 @@ function Home() {
         </div>
       </section>
 
-      {/* Destaques (4 Horizontal Cards como no RubinOT) */}
+      {/* NEW SERVER TITAN EVENT BANNER */}
+      <section className="relative overflow-hidden rounded-xl border border-amber-500/40 bg-gradient-to-r from-amber-500/15 via-panel to-primary/10 p-4 sm:p-5 shadow-md">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/50 bg-amber-500/20 px-2.5 py-0.5 text-[10px] font-extrabold text-amber-300 animate-pulse">
+                🔥 LANÇAMENTO HOJE
+              </span>
+              <span className="text-xs font-bold text-foreground">New Server Titan</span>
+            </div>
+            <h2 className="text-sm sm:text-base font-extrabold text-foreground">
+              Vai jogar no Servidor Titan? Evite as hunts lotadas com a rota anti-muvuca!
+            </h2>
+            <p className="text-xs text-muted-foreground">
+              Descubra o passo a passo da 1ª à 6ª hunt com opções alternativas para upar do 1 ao 150 sem perder tempo com KS.
+            </p>
+          </div>
+
+          <Link
+            to="/rota-titan"
+            className="inline-flex items-center gap-2 rounded-lg bg-amber-500 px-4 py-2 text-xs font-bold text-black hover:bg-amber-400 transition-all shadow-md shrink-0"
+          >
+            <span>Ver Rota Titan (1-150)</span>
+            <ArrowRight className="size-3.5" />
+          </Link>
+        </div>
+      </section>
+
+      {/* Destaques (5 Horizontal Cards como no RubinOT) */}
       <section className="space-y-2.5">
         <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground/80 px-1">
           DESTAQUES
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
           {HIGHLIGHTS.map((item) => (
             <Link
               key={item.to}
               to={item.to}
-              className="group flex items-center justify-between rounded-xl border border-border/80 bg-panel px-4 py-3.5 shadow-sm transition-all hover:border-primary/50 hover:bg-panel-strong hover:-translate-y-0.5"
+              className="group flex items-center justify-between rounded-xl border border-border/80 bg-panel px-3.5 py-3 shadow-sm transition-all hover:border-primary/50 hover:bg-panel-strong hover:-translate-y-0.5"
             >
-              <div className="flex items-center gap-3 min-w-0">
-                <span className="text-2xl shrink-0 transition-transform group-hover:scale-110">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <span className="text-xl shrink-0 transition-transform group-hover:scale-110">
                   {item.icon}
                 </span>
                 <div className="min-w-0">
-                  <p className="font-display text-sm font-bold text-foreground group-hover:text-primary transition-colors truncate">
+                  <p className="font-display text-xs font-bold text-foreground group-hover:text-primary transition-colors truncate">
                     {item.title}
                   </p>
-                  <p className="text-[11px] text-muted-foreground truncate">
+                  <p className="text-[10px] text-muted-foreground truncate">
                     {item.desc}
                   </p>
                 </div>
               </div>
-              <ArrowRight className="size-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0 ml-2" />
+              <ArrowRight className="size-3.5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all shrink-0 ml-1.5" />
             </Link>
           ))}
         </div>

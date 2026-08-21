@@ -12,6 +12,7 @@ export const NAV_GROUPS = [
   {
     title: "DESTAQUES",
     items: [
+      { to: "/rota-titan", label: "🔥 Rota Server Titan", icon: "⚔️" },
       { to: "/iniciantes", label: "Guia 1-150", icon: "🚀" },
       { to: "/times-hoenn", label: "Times Hoenn", icon: "🌋" },
       { to: "/onde-cacar", label: "Onde Caçar? (2.0x)", icon: "🗺️" },

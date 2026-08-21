@@ -26,6 +26,7 @@ import { Route as MedalhasRouteImport } from './routes/medalhas'
 import { Route as NpcsRouteImport } from './routes/npcs'
 import { Route as OndeCacarRouteImport } from './routes/onde-cacar'
 import { Route as PokedexRouteImport } from './routes/pokedex'
+import { Route as RotaTitanRouteImport } from './routes/rota-titan'
 import { Route as SistemasRouteImport } from './routes/sistemas'
 import { Route as StarRouteImport } from './routes/star'
 import { Route as TalentosRouteImport } from './routes/talentos'
@@ -121,6 +122,11 @@ const PokedexRoute = PokedexRouteImport.update({
   path: '/pokedex',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RotaTitanRoute = RotaTitanRouteImport.update({
+  id: '/rota-titan',
+  path: '/rota-titan',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SistemasRoute = SistemasRouteImport.update({
   id: '/sistemas',
   path: '/sistemas',
@@ -185,6 +191,7 @@ export interface FileRoutesByFullPath {
   '/npcs': typeof NpcsRoute
   '/onde-cacar': typeof OndeCacarRoute
   '/pokedex': typeof PokedexRoute
+  '/rota-titan': typeof RotaTitanRoute
   '/sistemas': typeof SistemasRoute
   '/star': typeof StarRoute
   '/talentos': typeof TalentosRoute
@@ -213,6 +220,7 @@ export interface FileRoutesByTo {
   '/npcs': typeof NpcsRoute
   '/onde-cacar': typeof OndeCacarRoute
   '/pokedex': typeof PokedexRoute
+  '/rota-titan': typeof RotaTitanRoute
   '/sistemas': typeof SistemasRoute
   '/star': typeof StarRoute
   '/talentos': typeof TalentosRoute
@@ -242,6 +250,7 @@ export interface FileRoutesById {
   '/npcs': typeof NpcsRoute
   '/onde-cacar': typeof OndeCacarRoute
   '/pokedex': typeof PokedexRoute
+  '/rota-titan': typeof RotaTitanRoute
   '/sistemas': typeof SistemasRoute
   '/star': typeof StarRoute
   '/talentos': typeof TalentosRoute
@@ -272,6 +281,7 @@ export interface FileRouteTypes {
     | '/npcs'
     | '/onde-cacar'
     | '/pokedex'
+    | '/rota-titan'
     | '/sistemas'
     | '/star'
     | '/talentos'
@@ -300,6 +310,7 @@ export interface FileRouteTypes {
     | '/npcs'
     | '/onde-cacar'
     | '/pokedex'
+    | '/rota-titan'
     | '/sistemas'
     | '/star'
     | '/talentos'
@@ -328,6 +339,7 @@ export interface FileRouteTypes {
     | '/npcs'
     | '/onde-cacar'
     | '/pokedex'
+    | '/rota-titan'
     | '/sistemas'
     | '/star'
     | '/talentos'
@@ -357,6 +369,7 @@ export interface RootRouteChildren {
   NpcsRoute: typeof NpcsRoute
   OndeCacarRoute: typeof OndeCacarRoute
   PokedexRoute: typeof PokedexRoute
+  RotaTitanRoute: typeof RotaTitanRoute
   SistemasRoute: typeof SistemasRoute
   StarRoute: typeof StarRoute
   TalentosRoute: typeof TalentosRoute
@@ -489,6 +502,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PokedexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/rota-titan': {
+      id: '/rota-titan'
+      path: '/rota-titan'
+      fullPath: '/rota-titan'
+      preLoaderRoute: typeof RotaTitanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sistemas': {
       id: '/sistemas'
       path: '/sistemas'
@@ -573,6 +593,7 @@ const rootRouteChildren: RootRouteChildren = {
   NpcsRoute: NpcsRoute,
   OndeCacarRoute: OndeCacarRoute,
   PokedexRoute: PokedexRoute,
+  RotaTitanRoute: RotaTitanRoute,
   SistemasRoute: SistemasRoute,
   StarRoute: StarRoute,
   TalentosRoute: TalentosRoute,
