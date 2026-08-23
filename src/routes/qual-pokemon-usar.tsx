@@ -655,12 +655,29 @@ function WhichPokemonToUsePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-border/60">
               {/* Helds Recommendation */}
               <Panel className="p-4 border-border/80 bg-card/40 space-y-3">
-                <div className="flex items-center gap-2">
-                  <Award className="w-4 h-4 text-amber-400" />
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">
-                    Held Itens Recomendados
-                  </h3>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Award className="w-4 h-4 text-amber-400" />
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-foreground">
+                      Held Itens Recomendados
+                    </h3>
+                  </div>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-primary/10 text-primary border border-primary/20">
+                    Regra Oficial
+                  </span>
                 </div>
+
+                {/* Golden Rule Callout */}
+                <div className="p-2.5 rounded-lg bg-gradient-to-r from-amber-500/10 via-primary/5 to-transparent border border-amber-500/30 text-xs space-y-1">
+                  <p className="font-bold text-amber-400 flex items-center gap-1.5">
+                    <span>⚡</span>
+                    <span>Regra Fundamental de Helds:</span>
+                  </p>
+                  <p className="text-[11px] text-muted-foreground leading-relaxed">
+                    Sempre utilize <strong className="text-foreground font-semibold">X-Boost</strong> até ir para Hoenn! Ao caçar em <strong className="text-foreground font-semibold">Hoenn nas hunts de rotação</strong>, mude para <strong className="text-foreground font-semibold">X-Attack</strong>.
+                  </p>
+                </div>
+
                 <div className="space-y-2">
                   {targetAnalysis.recommendedHelds.map((h, idx) => (
                     <div key={idx} className="p-2 rounded-lg bg-secondary/40 border border-border/40 text-xs">

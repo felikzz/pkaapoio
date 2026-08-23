@@ -416,31 +416,52 @@ export function analyzeTargetPokemon(targetNameOrSlug: string): TargetAnalysis |
     ["T1", "T2", "SR", "UR", "Legendary", "Mythic"].includes(c.tier),
   );
 
-  // Tactical helds and tips based on target element
+  // Tactical helds and tips based on target element and hunt progression
   const recommendedHelds: { name: string; icon: string; reason: string }[] = [];
   const huntTips: string[] = [];
 
-  if (perfectCounters.length > 0) {
+  const isHoennTarget = areas.some((a) => a.kind === "hoenn_tubos");
+
+  if (isHoennTarget) {
     recommendedHelds.push({
       name: "X-Attack / X-Special Attack",
-      icon: "⚔️",
-      reason: "Você já resiste aos golpes do alvo, então aumentar seu dano vai acelerar o farm drasticamente.",
+      icon: "🌋",
+      reason: "Nas hunts de rotação em Hoenn (Lvl 350+), utilize o X-Attack para maximizar seu dano bruto contra a alta vida dos mobs.",
     });
   } else {
     recommendedHelds.push({
+      name: "X-Boost",
+      icon: "⚡",
+      reason: "Sempre utilize o X-Boost até ir para Hoenn! É o melhor Held de dano para acelerar o seu farm e level up do 1 ao 150+.",
+    });
+  }
+
+  // Secondary held recommendations
+  if (perfectCounters.length === 0) {
+    recommendedHelds.push({
       name: "Y-Regen / X-Defense",
       icon: "🛡️",
-      reason: "Como o alvo pode causar dano neutro ou alto, regeneração de vida e defesa evitam gastos com poções.",
+      reason: "Caso você tome dano neutro ou elevado do alvo, regeneração de vida ou defesa evitam gastos constantes com poções.",
     });
   }
 
   recommendedHelds.push({
     name: "Exp Share",
     icon: "🎓",
-    reason: "Excelente para carregar outro Pokémon secundário no time e upar passivamente enquanto farma.",
+    reason: "Excelente para carregar outro Pokémon secundário no time e upar passivamente enquanto você farma.",
   });
 
   // Specific Tips
+  if (isHoennTarget) {
+    huntTips.push(
+      `🔥 Regra de Held: Como este Pokémon é caçado em rotações de Hoenn, utilize X-Attack no seu caçador para maximizar o DPS.`,
+    );
+  } else {
+    huntTips.push(
+      `⚡ Regra de Held: Sempre utilize X-Boost até chegar em Hoenn! Ele garante o maior rendimento de dano na sua rota.`,
+    );
+  }
+
   if (weakAgainstTypes.length > 0) {
     huntTips.push(
       `O alvo é fraco contra golpes dos tipos: ${weakAgainstTypes.join(", ")}. Priorize Pokémon desses tipos para causar 2.0x de dano constante.`,
