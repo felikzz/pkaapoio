@@ -125,15 +125,7 @@ function SidebarCredits() {
 
         <div className="rounded-lg border border-border/70 bg-panel/70 px-2.5 py-1.5">
           <span className="text-muted-foreground block text-[10px]">Autor da ferramenta:</span>
-          <a
-            href="https://wa.me/5519993149294"
-            target="_blank"
-            rel="noopener noreferrer"
-            title="Conversar com Felikzz no WhatsApp"
-            className="font-bold text-xs text-primary hover:underline hover:text-primary/80 transition-colors inline-flex items-center gap-1"
-          >
-            Felikzz
-          </a>
+          <span className="font-bold text-xs text-primary">Felikzz</span>
         </div>
       </div>
 
@@ -178,15 +170,7 @@ function AppFooter() {
             <span className="text-sm">💻</span>
             <div>
               <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Autor da ferramenta</p>
-              <a
-                href="https://wa.me/5519993149294"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Conversar com Felikzz no WhatsApp"
-                className="text-xs font-bold text-primary hover:underline hover:text-primary/80 transition-colors inline-block"
-              >
-                Felikzz
-              </a>
+              <p className="text-xs font-bold text-primary">Felikzz</p>
             </div>
           </div>
         </div>
@@ -244,15 +228,6 @@ export function AppShell({ children }: { children: ReactNode }) {
           </div>
 
           <div className="flex items-center gap-1.5 shrink-0 ml-auto">
-            <a
-              href="https://wa.me/5519993149294"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="Falar no WhatsApp com Felikzz"
-              className="inline-flex size-9 items-center justify-center rounded-lg border border-border bg-panel text-muted-foreground hover:text-emerald-400 hover:border-emerald-500/40 transition-colors"
-            >
-              <span className="text-base leading-none">💬</span>
-            </a>
             <Link
               to="/favoritos"
               aria-label="Meus favoritos"
