@@ -445,12 +445,6 @@ export function analyzeTargetPokemon(targetNameOrSlug: string): TargetAnalysis |
     });
   }
 
-  recommendedHelds.push({
-    name: "Exp Share",
-    icon: "🎓",
-    reason: "Excelente para carregar outro Pokémon secundário no time e upar passivamente enquanto você farma.",
-  });
-
   // Specific Tips
   if (isHoennTarget) {
     huntTips.push(
