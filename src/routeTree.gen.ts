@@ -26,6 +26,7 @@ import { Route as MedalhasRouteImport } from './routes/medalhas'
 import { Route as NpcsRouteImport } from './routes/npcs'
 import { Route as OndeCacarRouteImport } from './routes/onde-cacar'
 import { Route as PokedexRouteImport } from './routes/pokedex'
+import { Route as QualPokemonUsarRouteImport } from './routes/qual-pokemon-usar'
 import { Route as RotaTitanRouteImport } from './routes/rota-titan'
 import { Route as SistemasRouteImport } from './routes/sistemas'
 import { Route as StarRouteImport } from './routes/star'
@@ -122,6 +123,11 @@ const PokedexRoute = PokedexRouteImport.update({
   path: '/pokedex',
   getParentRoute: () => rootRouteImport,
 } as any)
+const QualPokemonUsarRoute = QualPokemonUsarRouteImport.update({
+  id: '/qual-pokemon-usar',
+  path: '/qual-pokemon-usar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RotaTitanRoute = RotaTitanRouteImport.update({
   id: '/rota-titan',
   path: '/rota-titan',
@@ -191,6 +197,7 @@ export interface FileRoutesByFullPath {
   '/npcs': typeof NpcsRoute
   '/onde-cacar': typeof OndeCacarRoute
   '/pokedex': typeof PokedexRoute
+  '/qual-pokemon-usar': typeof QualPokemonUsarRoute
   '/rota-titan': typeof RotaTitanRoute
   '/sistemas': typeof SistemasRoute
   '/star': typeof StarRoute
@@ -220,6 +227,7 @@ export interface FileRoutesByTo {
   '/npcs': typeof NpcsRoute
   '/onde-cacar': typeof OndeCacarRoute
   '/pokedex': typeof PokedexRoute
+  '/qual-pokemon-usar': typeof QualPokemonUsarRoute
   '/rota-titan': typeof RotaTitanRoute
   '/sistemas': typeof SistemasRoute
   '/star': typeof StarRoute
@@ -250,6 +258,7 @@ export interface FileRoutesById {
   '/npcs': typeof NpcsRoute
   '/onde-cacar': typeof OndeCacarRoute
   '/pokedex': typeof PokedexRoute
+  '/qual-pokemon-usar': typeof QualPokemonUsarRoute
   '/rota-titan': typeof RotaTitanRoute
   '/sistemas': typeof SistemasRoute
   '/star': typeof StarRoute
@@ -502,6 +511,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PokedexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/qual-pokemon-usar': {
+      id: '/qual-pokemon-usar'
+      path: '/qual-pokemon-usar'
+      fullPath: '/qual-pokemon-usar'
+      preLoaderRoute: typeof QualPokemonUsarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/rota-titan': {
       id: '/rota-titan'
       path: '/rota-titan'
@@ -593,6 +609,7 @@ const rootRouteChildren: RootRouteChildren = {
   NpcsRoute: NpcsRoute,
   OndeCacarRoute: OndeCacarRoute,
   PokedexRoute: PokedexRoute,
+  QualPokemonUsarRoute: QualPokemonUsarRoute,
   RotaTitanRoute: RotaTitanRoute,
   SistemasRoute: SistemasRoute,
   StarRoute: StarRoute,

@@ -26,6 +26,13 @@ export const Route = createFileRoute("/")({
 
 const HIGHLIGHTS = [
   {
+    icon: "🎯",
+    title: "Qual Pokémon Usar?",
+    desc: "Counters e vantagens para caçar qualquer alvo",
+    to: "/qual-pokemon-usar",
+    tag: "Novo",
+  },
+  {
     icon: "🔥",
     title: "Rota Server Titan",
     desc: "Guia do zero & anti-lotação",
@@ -40,18 +47,18 @@ const HIGHLIGHTS = [
     tag: "Level Up",
   },
   {
-    icon: "🌋",
-    title: "Times Hoenn",
-    desc: "Composições por elemento",
-    to: "/times-hoenn",
-    tag: "Metagame",
-  },
-  {
     icon: "🗺️",
     title: "Onde Caçar?",
     desc: "Hunts com 2.0x de dano",
     to: "/onde-cacar",
     tag: "Efetividade",
+  },
+  {
+    icon: "🌋",
+    title: "Times Hoenn",
+    desc: "Composições por elemento",
+    to: "/times-hoenn",
+    tag: "Metagame",
   },
   {
     icon: "💰",
@@ -94,8 +101,9 @@ const CATEGORIES = [
   {
     title: "Guias & Estratégias",
     icon: "🗺️",
-    count: 5,
+    count: 6,
     items: [
+      { to: "/qual-pokemon-usar", label: "🎯 Qual Pokémon Usar?", icon: "🎯" },
       { to: "/rota-titan", label: "🔥 Rota Server Titan (1-150)", icon: "⚔️" },
       { to: "/iniciantes", label: "Guia 1 ao 150", icon: "🚀" },
       { to: "/times-hoenn", label: "Times de Hoenn", icon: "🌋" },

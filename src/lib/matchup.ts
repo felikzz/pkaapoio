@@ -252,3 +252,247 @@ export function findBestHuntsForTeam(teamPokemonNames: string[]): HuntRecommenda
     return a.pokemon.localeCompare(b.pokemon);
   });
 }
+
+export type CounterQuality = "perfect" | "offensive" | "glass_cannon" | "tank" | "neutral";
+
+export type CounterOption = {
+  pokemon: PokemonEntry;
+  offensiveMultiplier: number;
+  defensiveMultiplier: number;
+  matchupQuality: CounterQuality;
+  tier: string;
+  type: string;
+  estimatedLevel: string;
+  isShiny: boolean;
+  score: number;
+  summary: string;
+};
+
+export type TargetAnalysis = {
+  entry: PokemonEntry;
+  weakAgainstTypes: string[];
+  resistsTypes: string[];
+  neutralTypes: string[];
+  areas: HuntAreaInfo[];
+  valuableDrops: string[];
+  allDrops: string[];
+  tasks: { npc: string; link: string | null }[];
+  allCounters: CounterOption[];
+  perfectCounters: CounterOption[];
+  offensiveCounters: CounterOption[];
+  tankCounters: CounterOption[];
+  budgetCounters: CounterOption[];
+  midCounters: CounterOption[];
+  topTierCounters: CounterOption[];
+  recommendedHelds: { name: string; icon: string; reason: string }[];
+  huntTips: string[];
+};
+
+export const TIER_SCORE_WEIGHT: Record<string, number> = {
+  Mythic: 100,
+  Legendary: 95,
+  UR: 90,
+  SR: 85,
+  T1: 80,
+  T2: 70,
+  T3: 60,
+  T4: 50,
+  T5: 40,
+  T6: 30,
+  T7: 20,
+};
+
+export function analyzeTargetPokemon(targetNameOrSlug: string): TargetAnalysis | null {
+  const normTarget = norm(targetNameOrSlug);
+  const targetEntry =
+    pokemonList.find((p) => norm(p.name) === normTarget || p.slug === targetNameOrSlug) ?? null;
+
+  if (!targetEntry) return null;
+
+  const targetType = targetEntry.type ?? "Normal";
+  const targetTier = targetEntry.tier ?? "T4";
+
+  // Identify weak against types (types that deal 2.0x damage to target)
+  const weakAgainstTypes = POKEMON_TYPES_INFO.map((t) => t.id).filter(
+    (atkType) => getEffectiveness(atkType, targetType) >= 2.0,
+  );
+
+  // Identify types the target resists (types that deal 0.5x damage to target)
+  const resistsTypes = POKEMON_TYPES_INFO.map((t) => t.id).filter(
+    (atkType) => getEffectiveness(atkType, targetType) <= 0.5,
+  );
+
+  const neutralTypes = POKEMON_TYPES_INFO.map((t) => t.id).filter(
+    (atkType) => !weakAgainstTypes.includes(atkType) && !resistsTypes.includes(atkType),
+  );
+
+  // Get locations & drops
+  const locEntry = db.locations.find((l) => norm(l.pokemon) === norm(targetEntry.name));
+  const rawAreas = locEntry?.entries ?? [];
+  const areas = rawAreas.map((a) => parseAreaInfo(a.area, a.link, a.note, targetTier));
+
+  const dropEntry = db.drops.find((d) => norm(d.pokemon) === norm(targetEntry.name));
+  const allDrops = dropEntry?.items ?? [];
+  const valuableDrops = allDrops.filter((i) => /stone|orb|shard|tail|feather|horn|claw|gosme|gem|scale|fang/i.test(i));
+
+  const taskEntry = db.tasks.find((t) => norm(t.pokemon) === norm(targetEntry.name));
+  const tasks = taskEntry?.npcs ?? [];
+
+  // Evaluate every candidate pokemon in game
+  const counterCandidates: CounterOption[] = [];
+
+  for (const candidate of pokemonList) {
+    // Ignore the target itself
+    if (norm(candidate.name) === norm(targetEntry.name)) continue;
+
+    const candType = candidate.type ?? "Normal";
+    const candTier = candidate.tier ?? "T6";
+
+    // How much damage candidate deals to target
+    const offensiveEff = getEffectiveness(candType, targetType);
+    // How much damage target deals to candidate
+    const defensiveEff = getEffectiveness(targetType, candType);
+
+    let matchupQuality: CounterQuality = "neutral";
+    let summary = "Dano Neutro";
+
+    if (offensiveEff >= 2.0 && defensiveEff <= 0.5) {
+      matchupQuality = "perfect";
+      summary = "🔥 2.0x Dano + 🛡️ Resiste aos golpes (Matchup Ideal)";
+    } else if (offensiveEff >= 2.0 && defensiveEff === 1.0) {
+      matchupQuality = "offensive";
+      summary = "🔥 2.0x Dano Super Efetivo (Troca Neutra)";
+    } else if (offensiveEff >= 2.0 && defensiveEff >= 2.0) {
+      matchupQuality = "glass_cannon";
+      summary = "⚡ 2.0x Dano Super Efetivo (⚠️ Cuidado: Também toma 2.0x)";
+    } else if (offensiveEff >= 1.0 && defensiveEff <= 0.5) {
+      matchupQuality = "tank";
+      summary = "🛡️ Resiste aos golpes (Dano Recebido 0.5x)";
+    }
+
+    // Only include if there is some strategic benefit (super effective or strong resistance)
+    if (offensiveEff >= 2.0 || defensiveEff <= 0.5) {
+      let score = 0;
+      if (matchupQuality === "perfect") score += 500;
+      else if (matchupQuality === "offensive") score += 300;
+      else if (matchupQuality === "tank") score += 150;
+      else if (matchupQuality === "glass_cannon") score += 200;
+
+      score += TIER_SCORE_WEIGHT[candTier] ?? 20;
+      if (candidate.shiny) score += 5;
+
+      const estimatedLevel = TIER_LEVEL_MAP[candTier] ?? "Lvl 50+";
+
+      counterCandidates.push({
+        pokemon: candidate,
+        offensiveMultiplier: offensiveEff,
+        defensiveMultiplier: defensiveEff,
+        matchupQuality,
+        tier: candTier,
+        type: candType,
+        estimatedLevel,
+        isShiny: candidate.shiny,
+        score,
+        summary,
+      });
+    }
+  }
+
+  // Sort counters by score descending
+  counterCandidates.sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    return a.pokemon.name.localeCompare(b.pokemon.name);
+  });
+
+  const perfectCounters = counterCandidates.filter((c) => c.matchupQuality === "perfect");
+  const offensiveCounters = counterCandidates.filter(
+    (c) => c.matchupQuality === "offensive" || c.matchupQuality === "glass_cannon",
+  );
+  const tankCounters = counterCandidates.filter((c) => c.matchupQuality === "tank");
+
+  const budgetCounters = counterCandidates.filter((c) => ["T7", "T6", "T5"].includes(c.tier));
+  const midCounters = counterCandidates.filter((c) => ["T4", "T3"].includes(c.tier));
+  const topTierCounters = counterCandidates.filter((c) =>
+    ["T1", "T2", "SR", "UR", "Legendary", "Mythic"].includes(c.tier),
+  );
+
+  // Tactical helds and tips based on target element
+  const recommendedHelds: { name: string; icon: string; reason: string }[] = [];
+  const huntTips: string[] = [];
+
+  if (perfectCounters.length > 0) {
+    recommendedHelds.push({
+      name: "X-Attack / X-Special Attack",
+      icon: "⚔️",
+      reason: "Você já resiste aos golpes do alvo, então aumentar seu dano vai acelerar o farm drasticamente.",
+    });
+  } else {
+    recommendedHelds.push({
+      name: "Y-Regen / X-Defense",
+      icon: "🛡️",
+      reason: "Como o alvo pode causar dano neutro ou alto, regeneração de vida e defesa evitam gastos com poções.",
+    });
+  }
+
+  recommendedHelds.push({
+    name: "Exp Share",
+    icon: "🎓",
+    reason: "Excelente para carregar outro Pokémon secundário no time e upar passivamente enquanto farma.",
+  });
+
+  // Specific Tips
+  if (weakAgainstTypes.length > 0) {
+    huntTips.push(
+      `O alvo é fraco contra golpes dos tipos: ${weakAgainstTypes.join(", ")}. Priorize Pokémon desses tipos para causar 2.0x de dano constante.`,
+    );
+  }
+
+  if (resistsTypes.length > 0) {
+    huntTips.push(
+      `Evite usar Pokémon do(s) tipo(s) ${resistsTypes.join(", ")}, pois o alvo resiste e você causará apenas 50% (0.5x) do seu dano normal.`,
+    );
+  }
+
+  if (perfectCounters.length > 0) {
+    huntTips.push(
+      `Os counters com Matchup Perfeito (${perfectCounters.slice(0, 3).map((p) => p.pokemon.name).join(", ")}) são a melhor escolha: eles matam rápido e tomam dano reduzido.`,
+    );
+  }
+
+  if (areas.length > 0) {
+    const hasNorm = areas.some((a) => a.kind === "normal");
+    const hasWild = areas.some((a) => a.kind === "wildscape");
+    const hasHoenn = areas.some((a) => a.kind === "hoenn_tubos");
+
+    if (hasNorm) {
+      huntTips.push(`Este Pokémon possui respawns em mapas abertos normais, acessíveis para qualquer nível.`);
+    }
+    if (hasWild) {
+      huntTips.push(`Possui respawn em Wildscape (área recomendada para nível 150+).`);
+    }
+    if (hasHoenn) {
+      huntTips.push(`Possui respawn avançado em Hoenn / Tubos (recomendado para nível 350+).`);
+    }
+  }
+
+  return {
+    entry: targetEntry,
+    weakAgainstTypes,
+    resistsTypes,
+    neutralTypes,
+    areas,
+    valuableDrops,
+    allDrops,
+    tasks,
+    allCounters: counterCandidates,
+    perfectCounters,
+    offensiveCounters,
+    tankCounters,
+    budgetCounters,
+    midCounters,
+    topTierCounters,
+    recommendedHelds,
+    huntTips,
+  };
+}
+

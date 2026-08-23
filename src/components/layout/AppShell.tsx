@@ -14,8 +14,9 @@ export const NAV_GROUPS = [
     items: [
       { to: "/rota-titan", label: "🔥 Rota Server Titan", icon: "⚔️" },
       { to: "/iniciantes", label: "Guia 1-150", icon: "🚀" },
-      { to: "/times-hoenn", label: "Times Hoenn", icon: "🌋" },
+      { to: "/qual-pokemon-usar", label: "Qual Pokémon Usar?", icon: "🎯" },
       { to: "/onde-cacar", label: "Onde Caçar? (2.0x)", icon: "🗺️" },
+      { to: "/times-hoenn", label: "Times Hoenn", icon: "🌋" },
       { to: "/analisador-loot", label: "Analisador de Loot", icon: "💰" },
       { to: "/assistente", label: "Assistente IA", icon: "🤖" },
     ],

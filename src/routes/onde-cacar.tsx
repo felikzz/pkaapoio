@@ -108,29 +108,56 @@ function WhereToHuntPage() {
       </div>
 
       {/* BANNER NEW SERVER TITAN */}
-      <div className="rounded-xl border border-amber-500/40 bg-gradient-to-r from-amber-500/15 via-panel to-primary/10 p-3.5 sm:p-4 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <span className="text-2xl shrink-0">⚔️</span>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] font-extrabold text-amber-400 bg-amber-500/20 px-2 py-0.5 rounded border border-amber-500/30 uppercase">
-                New Server Titan
-              </span>
-              <p className="text-xs font-bold text-foreground">Procurando rota do zero para rushar no novo servidor?</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="rounded-xl border border-amber-500/40 bg-gradient-to-r from-amber-500/15 via-panel to-primary/10 p-3.5 sm:p-4 shadow-sm flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <span className="text-2xl shrink-0">⚔️</span>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-extrabold text-amber-400 bg-amber-500/20 px-2 py-0.5 rounded border border-amber-500/30 uppercase">
+                  New Server Titan
+                </span>
+                <p className="text-xs font-bold text-foreground">Rota do zero para rushar?</p>
+              </div>
+              <p className="text-[11px] text-muted-foreground mt-0.5">
+                Guia com alternativas anti-lotação.
+              </p>
             </div>
-            <p className="text-[11px] text-muted-foreground mt-0.5">
-              Consulte nosso <strong>Guia Passo a Passo com Alternativas Anti-Lotação</strong> da 1ª à 6ª hunt!
-            </p>
           </div>
+
+          <Link
+            to="/rota-titan"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-amber-500 px-3 py-1.5 text-xs font-bold text-black hover:bg-amber-400 transition-all shrink-0 shadow-sm"
+          >
+            <span>Rota Titan</span>
+            <Compass className="size-3.5" />
+          </Link>
         </div>
 
-        <Link
-          to="/rota-titan"
-          className="inline-flex items-center gap-1.5 rounded-lg bg-amber-500 px-3.5 py-1.5 text-xs font-bold text-black hover:bg-amber-400 transition-all shrink-0 shadow-sm"
-        >
-          <span>Abrir Rota Titan</span>
-          <Compass className="size-3.5" />
-        </Link>
+        <div className="rounded-xl border border-primary/40 bg-gradient-to-r from-primary/15 via-panel to-card p-3.5 sm:p-4 shadow-sm flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <span className="text-2xl shrink-0">🎯</span>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-extrabold text-primary bg-primary/20 px-2 py-0.5 rounded border border-primary/30 uppercase">
+                  Caçar Alvo Específico
+                </span>
+                <p className="text-xs font-bold text-foreground">Quer caçar um Pokémon específico?</p>
+              </div>
+              <p className="text-[11px] text-muted-foreground mt-0.5">
+                Veja quais Pokémons usar contra ele com 2.0x de dano.
+              </p>
+            </div>
+          </div>
+
+          <Link
+            to="/qual-pokemon-usar"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground hover:bg-primary/90 transition-all shrink-0 shadow-sm"
+          >
+            <span>Qual Usar?</span>
+            <Sparkles className="size-3.5" />
+          </Link>
+        </div>
       </div>
 
       {/* SELEÇÃO DO TIME */}

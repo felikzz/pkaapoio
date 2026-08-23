@@ -54,9 +54,15 @@ function PokemonPage() {
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <SectionTitle icon={<PokemonIcon pokemon={p.name} className="w-8 h-8" />} title={p.name} subtitle={p.type ? `Moveset: ${p.type}` : undefined} />
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             {p.tier ? <TierBadge tier={p.tier} /> : null}
             {p.shiny ? <Chip tone="gold">Shiny</Chip> : null}
+            <Link
+              to="/qual-pokemon-usar"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-primary/40 bg-primary/10 px-2.5 py-1 text-xs font-semibold text-primary hover:bg-primary/20 transition-all"
+            >
+              <span>🎯 Qual Pokémon usar para caçar {p.name}?</span>
+            </Link>
           </div>
         </div>
         <FavoriteButton fav={{ kind: "pokemon", label: p.name, to: `/pokemon/${p.slug}` }} />
