@@ -3,7 +3,7 @@ import { useState, useMemo } from "react";
 import { SectionTitle, Panel, ExternalLinkChip, Chip, TierBadge, PokemonIcon } from "@/components/pka/ui";
 import { pokemonList, norm, slugify, type PokemonEntry } from "@/lib/pka";
 import { findBestHuntsForTeam, HuntRecommendation } from "@/lib/matchup";
-import { Sword, MapPin, Sparkles, Filter, Plus, X, CheckCircle2, ShieldAlert } from "lucide-react";
+import { Sword, MapPin, Sparkles, Filter, Plus, X, CheckCircle2, ShieldAlert, Compass } from "lucide-react";
 
 export const Route = createFileRoute("/onde-cacar")({
   head: () => ({
