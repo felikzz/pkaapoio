@@ -33,7 +33,7 @@ Todas as alterações notáveis, novas funcionalidades e correções de bugs da 
   - Acesso direto a todas as calculadoras, tabelas de brokes, dungeons e rotas.
 - **Créditos da Comunidade**:
   - Reconhecimento explícito:
-    - 📊 **Fonte das Informações**: *VitorMonticelli* & *Wiki Oficial PKA*
+    - 📊 **Fonte das Informações**: *MTS Vitor* & *Wiki Oficial PKA*
     - 💻 **Autor da Ferramenta**: *Felikzz* (com link de contato direto).
 
 ---

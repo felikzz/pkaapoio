@@ -389,10 +389,10 @@ ${guideMatch.links.length ? `🔗 **Links úteis:**\n${guideMatch.links.map((l) 
   }
 
   // Créditos & Reconhecimento
-  if (/credito|creditos|autor|quem criou|vitormonticelli|vitor monticelli|felikzz|wikipka|wiki|quem fez|fonte|dados|criador/i.test(q)) {
+  if (/credito|creditos|autor|quem criou|mts vitor|mts_vitor|mts|vitormonticelli|vitor monticelli|felikzz|wikipka|wiki|quem fez|fonte|dados|criador/i.test(q)) {
     return `### 🌟 Créditos e Reconhecimento
     
-- **Fonte das informações:** VitorMonticelli e WikiPKA
+- **Fonte das informações:** MTS Vitor e WikiPKA
 - **Autor da ferramenta:** Felikzz
 
 O **PKA Helper** reúne e estrutura esses dados para facilitar a consulta diária de toda a comunidade do PokeAlliance!`;

@@ -33,13 +33,6 @@ const HIGHLIGHTS = [
     tag: "Novo",
   },
   {
-    icon: "🔥",
-    title: "Rota Server Titan",
-    desc: "Guia do zero & anti-lotação",
-    to: "/rota-titan",
-    tag: "Novo Servidor",
-  },
-  {
     icon: "🚀",
     title: "Guia 1-150",
     desc: "Rotas de up e tasks rápidas",
@@ -101,10 +94,9 @@ const CATEGORIES = [
   {
     title: "Guias & Estratégias",
     icon: "🗺️",
-    count: 6,
+    count: 5,
     items: [
       { to: "/qual-pokemon-usar", label: "🎯 Qual Pokémon Usar?", icon: "🎯" },
-      { to: "/rota-titan", label: "🔥 Rota Server Titan (1-150)", icon: "⚔️" },
       { to: "/iniciantes", label: "Guia 1 ao 150", icon: "🚀" },
       { to: "/times-hoenn", label: "Times de Hoenn", icon: "🌋" },
       { to: "/onde-cacar", label: "Onde Caçar? (2.0x)", icon: "🗺️" },
@@ -166,34 +158,6 @@ function Home() {
 
         <div className="mt-4 pt-4 border-t border-border/50">
           <GlobalSearch size="lg" placeholder="Pesquise por páginas, Pokémon, itens, dungeons, tasks... (Ctrl + K)" />
-        </div>
-      </section>
-
-      {/* NEW SERVER TITAN EVENT BANNER */}
-      <section className="relative overflow-hidden rounded-xl border border-amber-500/40 bg-gradient-to-r from-amber-500/15 via-panel to-primary/10 p-4 sm:p-5 shadow-md">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/50 bg-amber-500/20 px-2.5 py-0.5 text-[10px] font-extrabold text-amber-300 animate-pulse">
-                🔥 LANÇAMENTO HOJE
-              </span>
-              <span className="text-xs font-bold text-foreground">New Server Titan</span>
-            </div>
-            <h2 className="text-sm sm:text-base font-extrabold text-foreground">
-              Vai jogar no Servidor Titan? Evite as hunts lotadas com a rota anti-muvuca!
-            </h2>
-            <p className="text-xs text-muted-foreground">
-              Descubra o passo a passo da 1ª à 6ª hunt com opções alternativas para upar do 1 ao 150 sem perder tempo com KS.
-            </p>
-          </div>
-
-          <Link
-            to="/rota-titan"
-            className="inline-flex items-center gap-2 rounded-lg bg-amber-500 px-4 py-2 text-xs font-bold text-black hover:bg-amber-400 transition-all shadow-md shrink-0"
-          >
-            <span>Ver Rota Titan (1-150)</span>
-            <ArrowRight className="size-3.5" />
-          </Link>
         </div>
       </section>
 
