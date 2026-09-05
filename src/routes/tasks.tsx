@@ -54,8 +54,29 @@ function Tasks() {
         onChange={(e) => navigate({ search: { q: e.target.value } })}
         placeholder="Pesquisar Pokémon ou NPC..."
         aria-label="Pesquisar task"
-        className="mb-6 h-11 w-full rounded-md border border-input bg-panel px-3 text-sm focus:border-primary focus:outline-none"
+        className="mb-4 h-11 w-full rounded-md border border-input bg-panel px-3 text-sm focus:border-primary focus:outline-none"
       />
+
+      {/* Pokelog Banner Callout */}
+      <div className="mb-6 flex flex-col gap-3 rounded-xl border border-primary/30 bg-gradient-to-r from-primary/10 via-panel to-panel p-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-3">
+          <span className="text-2xl">📜</span>
+          <div>
+            <p className="font-bold text-sm text-foreground">
+              Procurando o Roteiro & Checklist de Pokelogs (100+)?
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Acesse a ferramenta dedicada para marcar pokelogs concluídos, ver hunts rápidas e rota guiada.
+            </p>
+          </div>
+        </div>
+        <Link
+          to="/pokelogs"
+          className="inline-flex shrink-0 items-center justify-center rounded-lg bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition-colors"
+        >
+          Abrir Roteiro de Pokelogs →
+        </Link>
+      </div>
 
       {tasks.length === 0 && hazard.length === 0 ? (
         <EmptyState query={q} />

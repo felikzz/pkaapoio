@@ -12,6 +12,7 @@ export const NAV_GROUPS = [
   {
     title: "DESTAQUES",
     items: [
+      { to: "/pokelogs", label: "Pokelogs (100+)", icon: "📜" },
       { to: "/iniciantes", label: "Guia 1-150", icon: "🚀" },
       { to: "/qual-pokemon-usar", label: "Qual Pokémon Usar?", icon: "🎯" },
       { to: "/onde-cacar", label: "Onde Caçar? (2.0x)", icon: "🗺️" },
@@ -23,6 +24,7 @@ export const NAV_GROUPS = [
   {
     title: "SISTEMAS",
     items: [
+      { to: "/pokelogs", label: "Pokelogs & Roteiro", icon: "📜" },
       { to: "/brokes-maximas", label: "Brokes Máximas", icon: "📊" },
       { to: "/star", label: "Star Ascension", icon: "⭐" },
       { to: "/boost", label: "Boost Recipes", icon: "⚡" },

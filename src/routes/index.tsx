@@ -26,11 +26,18 @@ export const Route = createFileRoute("/")({
 
 const HIGHLIGHTS = [
   {
+    icon: "📜",
+    title: "Pokelogs (100+)",
+    desc: "Checklist interativo e roteiro guiado para level 100+",
+    to: "/pokelogs",
+    tag: "Novo",
+  },
+  {
     icon: "🎯",
     title: "Qual Pokémon Usar?",
     desc: "Counters e vantagens para caçar qualquer alvo",
     to: "/qual-pokemon-usar",
-    tag: "Novo",
+    tag: "Essencial",
   },
   {
     icon: "🚀",
@@ -66,8 +73,9 @@ const CATEGORIES = [
   {
     title: "Sistemas",
     icon: "⚙️",
-    count: 8,
+    count: 9,
     items: [
+      { to: "/pokelogs", label: "Pokelogs & Roteiro", icon: "📜" },
       { to: "/brokes-maximas", label: "Brokes Máximas", icon: "📊" },
       { to: "/star", label: "Star Ascension", icon: "⭐" },
       { to: "/boost", label: "Boost Recipes", icon: "⚡" },
