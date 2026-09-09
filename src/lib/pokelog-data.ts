@@ -17,8 +17,6 @@ export interface PokelogItem {
   elementTypes: string[];
   weaknesses: string[];
   hunt: string | null;
-  killsPerHour: number | null;
-  estimatedHours: number | null;
   drops: string[];
   stage: number;
   stageTitle: string;
@@ -110,24 +108,12 @@ export const POKELOG_ITEMS: PokelogItem[] = rawTasks.map((t: LinkedTask) => {
     rare: "Raro / Lendário / Tubos",
   };
 
-  // Parse Kills per hour
-  let kph: number | null = null;
-  if (t.killsPerHour) {
-    const num = parseFloat(t.killsPerHour.replace(/[^0-9.]/g, ""));
-    if (!isNaN(num) && num > 0) {
-      kph = num;
-    }
-  }
-
-  // Estimated hours
-  const estimatedHours = kph && kph > 0 ? Number((qtd / kph).toFixed(1)) : null;
-
   // Weaknesses
   const weaknesses = getWeaknesses(elementTypes);
 
   // Assign Stage for Recommended Progression Path
-  let stage = 3;
-  let stageTitle = "Fase 3: Pokelogs Wild (10k)";
+  let stage = 2;
+  let stageTitle = "Fase 2: Wilds de Kanto & Johto (10.000 Kills)";
   let stageDesc = "Farm clássico de 10.000 kills para liberar slots e bônus cruciais.";
   let difficulty: "Fácil" | "Médio" | "Demorado" | "Desafiador" = "Demorado";
 
@@ -136,19 +122,19 @@ export const POKELOG_ITEMS: PokelogItem[] = rawTasks.map((t: LinkedTask) => {
     stageTitle = "Fase 1: Aquecimento & Pré-100";
     stageDesc = "Pokelogs rápidos (30 a 800 kills). Faça primeiro para pegar recompensas iniciais.";
     difficulty = "Fácil";
-  } else if (kph && kph >= 2400 && category === "wild") {
+  } else if (category === "wild") {
     stage = 2;
-    stageTitle = "Fase 2: Level 100+ Alta Velocidade";
-    stageDesc = "Hunts com altíssima densidade (>2.400 kills/h). Faça logo no 100 para upar rápido.";
-    difficulty = "Médio";
+    stageTitle = "Fase 2: Wilds de Kanto & Johto (10.000 Kills)";
+    stageDesc = "Farm clássico de 10.000 kills para liberar slots e bônus cruciais.";
+    difficulty = "Demorado";
   } else if (category === "hoenn") {
-    stage = 4;
-    stageTitle = "Fase 4: Pokelogs de Hoenn (4k)";
+    stage = 3;
+    stageTitle = "Fase 3: Pokelogs de Hoenn (4k)";
     stageDesc = "Pokémons da região de Hoenn com meta de 4.000 kills.";
     difficulty = "Médio";
   } else if (category === "rare") {
-    stage = 5;
-    stageTitle = "Fase 5: Endgame & Tubos / Raros";
+    stage = 4;
+    stageTitle = "Fase 4: Endgame, Tubos & Raros";
     stageDesc = "Pokelogs de pokémons raros, lendários e míticos.";
     difficulty = "Desafiador";
   }
@@ -160,10 +146,6 @@ export const POKELOG_ITEMS: PokelogItem[] = rawTasks.map((t: LinkedTask) => {
     tips = `Use pokémons do elemento ${primaryWeak} para causar 2.0x de dano.`;
   } else {
     tips = "Foque em dano em área (AoE) para limpar os spawns mais rápido.";
-  }
-
-  if (kph && kph >= 2500) {
-    tips += ` ⚡ Hunt super rápida (~${kph} kills/h).`;
   }
 
   return {
@@ -180,8 +162,6 @@ export const POKELOG_ITEMS: PokelogItem[] = rawTasks.map((t: LinkedTask) => {
     elementTypes,
     weaknesses,
     hunt: t.hunt && t.hunt.startsWith("http") ? t.hunt : null,
-    killsPerHour: kph,
-    estimatedHours,
     drops: dropsMap.get(nName) || [],
     stage,
     stageTitle,
@@ -195,7 +175,6 @@ export const POKELOG_ITEMS: PokelogItem[] = rawTasks.map((t: LinkedTask) => {
 export const POKELOGS_RECOMMENDED_ORDER = [...POKELOG_ITEMS].sort((a, b) => {
   if (a.stage !== b.stage) return a.stage - b.stage;
   if (a.qtd !== b.qtd) return a.qtd - b.qtd;
-  if (a.killsPerHour && b.killsPerHour) return b.killsPerHour - a.killsPerHour;
   return a.pokemon.localeCompare(b.pokemon);
 });
 
@@ -210,31 +189,23 @@ export const POKELOG_STAGES = [
   },
   {
     stage: 2,
-    title: "Fase 2: Level 100+ Alta Eficiência (>2.400 Kills/h)",
-    badge: "Recomendado 100+",
-    desc: "Os pokelogs de 10.000 kills mais rápidos do jogo (Blastoise, Ampharos, Charizard, Dodrio, etc.). Rendem muita XP e terminam em menos de 4 horas.",
-    icon: "⚡",
-    color: "from-amber-500/20 to-yellow-500/10 border-amber-500/30 text-amber-400",
-  },
-  {
-    stage: 3,
-    title: "Fase 3: Wilds 10.000 Essenciais & Meta",
+    title: "Fase 2: Wilds de Kanto & Johto (10.000 kills)",
     badge: "Wild 10k",
-    desc: "A espinha dorsal dos Pokelogs de Kanto/Johto. Recompensas fundamentais para fortalecer a conta e obter bônus permanentes.",
+    desc: "A espinha dorsal dos Pokelogs de 10.000 kills. Recompensas fundamentais para fortalecer a conta, acumular tokens e obter bônus permanentes.",
     icon: "🌲",
     color: "from-emerald-500/20 to-green-500/10 border-emerald-500/30 text-emerald-400",
   },
   {
-    stage: 4,
-    title: "Fase 4: Rota Hoenn (4.000 kills)",
+    stage: 3,
+    title: "Fase 3: Rota Hoenn (4.000 kills)",
     badge: "Hoenn 4k",
     desc: "Pokémons da região Hoenn. Meta mais acessível de 4.000 kills com ótimos drops de pedras e itens de evolução.",
     icon: "🌋",
     color: "from-orange-500/20 to-red-500/10 border-orange-500/30 text-orange-400",
   },
   {
-    stage: 5,
-    title: "Fase 5: Endgame, Tubos & Raros",
+    stage: 4,
+    title: "Fase 4: Endgame, Tubos & Raros",
     badge: "Endgame",
     desc: "Pokelogs de Pokémons Super Raros, Ultra Raros, Lendários e Míticos. O auge da progressão para colecionadores e top players.",
     icon: "👑",

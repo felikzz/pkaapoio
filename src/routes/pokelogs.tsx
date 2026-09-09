@@ -8,8 +8,6 @@ import {
   Filter,
   ArrowUpDown,
   Flame,
-  Zap,
-  Clock,
   Sparkles,
   RotateCcw,
   Download,
@@ -56,7 +54,7 @@ export const Route = createFileRoute("/pokelogs")({
       {
         name: "description",
         content:
-          "Guia completo e checklist interativo de Pokelogs do PokeAlliance: organize suas metas, marque pokelogs concluídos, siga a melhor rota para level 100+ e descubra hunts rápidas.",
+          "Guia completo e checklist interativo de Pokelogs do PokeAlliance: organize suas metas, marque pokelogs concluídos, acompanhe seu progresso e siga a melhor rota para level 100+.",
       },
       {
         property: "og:title",
@@ -74,7 +72,7 @@ export const Route = createFileRoute("/pokelogs")({
 
 type StatusFilter = "all" | "pending" | "progress" | "completed" | "priority";
 type LevelFilter = "all" | "lvl100" | "starter";
-type SortOption = "recommended" | "killsAsc" | "killsDesc" | "speedDesc" | "nameAsc" | "tier";
+type SortOption = "recommended" | "killsAsc" | "killsDesc" | "nameAsc" | "tier";
 
 function PokelogsPage() {
   const {
@@ -99,7 +97,6 @@ function PokelogsPage() {
   const [categoryFilter, setCategoryFilter] = useState<PokelogCategory | "all">("all");
   const [levelFilter, setLevelFilter] = useState<LevelFilter>("all");
   const [tierFilter, setTierFilter] = useState<string>("all");
-  const [fastOnly, setFastOnly] = useState(false);
   const [sortBy, setSortBy] = useState<SortOption>("recommended");
 
   // Selected stage for roadmap filter (optional)
@@ -180,9 +177,6 @@ function PokelogsPage() {
       // Tier Filter
       if (tierFilter !== "all" && item.tier !== tierFilter) return false;
 
-      // Fast Hunts
-      if (fastOnly && (!item.killsPerHour || item.killsPerHour < 2400)) return false;
-
       // Stage Filter
       if (selectedStage !== "all" && item.stage !== selectedStage) return false;
 
@@ -203,7 +197,6 @@ function PokelogsPage() {
       }
       if (sortBy === "killsAsc") return a.qtd - b.qtd;
       if (sortBy === "killsDesc") return b.qtd - a.qtd;
-      if (sortBy === "speedDesc") return (b.killsPerHour || 0) - (a.killsPerHour || 0);
       if (sortBy === "nameAsc") return a.pokemon.localeCompare(b.pokemon);
       if (sortBy === "tier") return a.tier.localeCompare(b.tier);
       return 0;
@@ -214,7 +207,6 @@ function PokelogsPage() {
     categoryFilter,
     levelFilter,
     tierFilter,
-    fastOnly,
     selectedStage,
     sortBy,
     isCompleted,
@@ -477,9 +469,9 @@ function PokelogsPage() {
               Caminho Otimizado de Pokelogs (Nível 100 ao Endgame)
             </p>
             <p className="text-muted-foreground text-xs leading-relaxed">
-              No PokeAlliance, fazer pokelogs fora de ordem pode demorar o dobro do tempo.
+              No PokeAlliance, fazer pokelogs fora de ordem pode demorar mais tempo.
               Recomendamos seguir esta ordem por fases: comece limpando os pokelogs rápidos pré-100,
-              depois ataque as hunts de 10.000 mais rápidas (&gt;2.400 kills/h) para acumular tokens e XP rápido,
+              depois ataque os pokelogs Wilds de 10.000 kills para acumular tokens e bônus cruciais,
               prossiga para a rota Hoenn (4.000 kills) e finalize nos Raros e Míticos.
             </p>
           </div>
@@ -574,7 +566,6 @@ function PokelogsPage() {
                   <option value="recommended">Ordem Recomendada (Roadmap)</option>
                   <option value="killsAsc">Menos Kills Primeiro</option>
                   <option value="killsDesc">Mais Kills Primeiro</option>
-                  <option value="speedDesc">Hunts Mais Rápidas (Kills/h)</option>
                   <option value="nameAsc">Nome (A - Z)</option>
                   <option value="tier">Tier</option>
                 </select>
@@ -635,20 +626,6 @@ function PokelogsPage() {
                     {cat.label}
                   </button>
                 ))}
-
-                {/* Speed toggle */}
-                <button
-                  onClick={() => setFastOnly(!fastOnly)}
-                  className={cn(
-                    "ml-auto rounded-lg px-2.5 py-1 text-xs font-medium transition-colors flex items-center gap-1",
-                    fastOnly
-                      ? "bg-amber-500/20 text-amber-300 border border-amber-500/40 font-semibold"
-                      : "bg-panel-strong text-muted-foreground hover:text-foreground",
-                  )}
-                >
-                  <Zap className="size-3 text-amber-400" />
-                  <span>Apenas Hunts Rápidas (&gt;2.400/h)</span>
-                </button>
               </div>
             </div>
 
@@ -731,7 +708,7 @@ function PokelogsPage() {
               </h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
                 Ao atingir o level 100, o player tem acesso a Pokémons com alto dano em área (AoE) e rotas
-                de hunt com alta densidade (spawns de 2.000 a 3.500 kills/h).
+                de hunt com alta densidade de spawns.
                 Completar os Pokelogs de 10.000 Wilds e 4.000 Hoenn garante uma quantidade massiva de
                 recompensas e XP acumulada.
               </p>
@@ -1015,28 +992,13 @@ function PokelogCard({
         </button>
       </div>
 
-      {/* Middle: Stats / Speed / Weaknesses */}
+      {/* Middle: Hunt Link / Weaknesses */}
       <div className="my-2.5 space-y-1.5 text-xs">
-        {/* Speed & Time Estimation */}
-        <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
-          {item.killsPerHour ? (
-            <span className="inline-flex items-center gap-1 rounded-md border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 font-medium text-amber-400">
-              <Zap className="size-3" />
-              {item.killsPerHour.toLocaleString()} kills/h
-            </span>
-          ) : null}
-
-          {item.estimatedHours ? (
-            <span className="inline-flex items-center gap-1 rounded-md border border-border bg-sidebar px-2 py-0.5 text-muted-foreground">
-              <Clock className="size-3" />
-              ~{item.estimatedHours}h
-            </span>
-          ) : null}
-
-          {item.hunt ? (
+        {item.hunt ? (
+          <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
             <ExternalLinkChip href={item.hunt} label="Ver Mapa / Hunt" />
-          ) : null}
-        </div>
+          </div>
+        ) : null}
 
         {/* Counter / 2.0x Weaknesses */}
         {item.weaknesses.length > 0 && !isDone && (
